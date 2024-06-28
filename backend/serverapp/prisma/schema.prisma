@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Authentication
+
+model Role {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]   @relation
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  password      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  roles         Role[]   @relation
+  accessToken   String?
+  refreshToken  String?
+}
+
+/// Business Logic
+
+model Activity {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  contact         String
+  location        String
+  teams           Team[]   @relation
+  apps            App[]    @relation
+  services        Service[] @relation
+  impacts         Impact[] @relation
+  scale           Scale
+  criticality     Int
+  RTO             Int
+  RPO             Int
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String
+  updatedBy       String
+  deletedBy       String?
+}
+
+model App {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  contact         String
+  vendorId        String
+  vendor          Vendor   @relation(fields: [vendorId], references: [id])
+  isGDPRCompliant Boolean
+  isSOXCompliant  Boolean
+  isPCICompliant  Boolean
+  isHIPAACompliant Boolean
+  RTO             Int
+  RPO             Int
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String
+  updatedBy       String
+  deletedBy       String?
+  activitySpecific String
+  tags            String[]
+  activities      Activity[] @relation
+}
+
+model Impact {
+  id            String   @id @default(cuid())
+  type          String
+  impacts       Int[]
+  times         String[]
+  activities    Activity[] @relation
+}
+
+model Service {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  contact         String
+  vendorId        String
+  vendor          Vendor   @relation(fields: [vendorId], references: [id])
+  isInternal      Boolean
+  isGDPRCompliant Boolean
+  isSOXCompliant  Boolean
+  isPCICompliant  Boolean
+  isHIPAACompliant Boolean
+  RTO             Int
+  RPO             Int
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String
+  updatedBy       String
+  deletedBy       String?
+  activitySpecific String
+  tags            String[]
+  activities      Activity[] @relation
+}
+
+model Team {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  contact         String
+  location        String
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String
+  updatedBy       String
+  deletedBy       String?
+  activities      Activity[] @relation
+}
+
+model Vendor {
+  id              String   @id @default(cuid())
+  name            String
+  description     String
+  country         String
+  city            String
+  phone           String
+  email           String
+  isGDPRCompliant Boolean
+  isSOXCompliant  Boolean
+  isPCICompliant  Boolean
+  isHIPAACompliant Boolean
+  RTO             Int
+  RPO             Int
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String
+  updatedBy       String
+  deletedBy       String?
+  tags            String[]
+  apps            App[]    @relation
+  services        Service[] @relation
+}
+
+enum Scale {
+  LOW
+  MEDIUM
+  HIGH
+}
