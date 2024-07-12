@@ -10,11 +10,28 @@ export class ActivityService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createActivityDto: CreateActivityDto) {
+    const servicesIdNumber: number[] = createActivityDto.servicesId.map(Number);
+    const teamsIdNumber: number[] = createActivityDto.teamsId.map(Number);
     return this.prisma.activity.create({
       data: {
         RPO: 0,
         RTO: 0,
-        ...createActivityDto,
+        teams: {
+          connect: teamsIdNumber.map((id) => ({ id })),
+        },
+        services: {
+          connect: servicesIdNumber.map((id) => ({ id })),
+        },
+        name: createActivityDto.name,
+        description: createActivityDto.description,
+        criticality: createActivityDto.criticality,
+        owner: createActivityDto.owner,
+        validation: createActivityDto.validation,
+        volume: createActivityDto.volume,
+        frequency: createActivityDto.frequency,
+        location: createActivityDto.location,
+        status: createActivityDto.status,
+        tags: createActivityDto.tags
       }
     });
   }

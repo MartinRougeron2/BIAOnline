@@ -33,12 +33,6 @@ export class Activity implements Base {
     status: string;
     
     @ApiProperty()
-    apps: string[];
-    
-    @ApiProperty()
-    teams: string[];
-    
-    @ApiProperty()
     RTO: number;
     
     @ApiProperty()

@@ -30,8 +30,8 @@ model Activity {
   frequency   String
   location    String
   status      String
-  apps        String[]
-  teams       String[]
+  services    Service[] @relation("ActivityServices")
+  teams       Team[]
   impacts     Impact[] @relation("ActivityImpacts")
   RTO         Int
   RPO         Int
@@ -48,6 +48,7 @@ model Service {
   owner         String
   status        String
   activityspecific Activity[] @relation("ActivitySpecific")
+  activites      Activity[] @relation("ActivityServices")
   location      String
   RTO           Int
   RPO           Int
@@ -66,6 +67,7 @@ model Team {
   users       AccountUser[]
   status      String
   membersnumber Int
+  activities  Activity[]
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())

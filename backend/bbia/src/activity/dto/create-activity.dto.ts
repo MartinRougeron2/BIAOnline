@@ -29,10 +29,10 @@ export class CreateActivityDto {
     status: string;
     
     @ApiProperty()
-    apps: string[];
+    servicesId: string[];
     
     @ApiProperty()
-    teams: string[];
+    teamsId: string[];
     
     @ApiProperty()
     tags: string[];
