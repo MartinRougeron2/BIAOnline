@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Impact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  timeline  String[]
+  impacts   Int[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  activityId Int
+  activity  Activity @relation("ActivityImpacts", fields: [activityId], references: [id])
+}
+
+model Activity {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  criticality String
+  owner       String
+  validation  String
+  volume      String
+  frequency   String
+  location    String
+  status      String
+  apps        String[]
+  teams       String[]
+  impacts     Impact[] @relation("ActivityImpacts")
+  RTO         Int
+  RPO         Int
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  appspecific Service[] @relation("ActivitySpecific")
+}
+
+model Service {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String
+  owner         String
+  status        String
+  activityspecific Activity[] @relation("ActivitySpecific")
+  location      String
+  RTO           Int
+  RPO           Int
+  vendorId      Int
+  Vendor        Vendor @relation(fields: [vendorId], references: [id])
+  tags          String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+}
+
+model Team {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  owner       String
+  users       AccountUser[]
+  status      String
+  membersnumber Int
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+model Vendor {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  contact     String
+  status      String
+  tags        String[]
+  defaultRTO  Int
+  defaultRPO  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  Service  Service[]
+}
+
+
+model BillingTeam {
+  id        Int      @id @default(autoincrement())
+  name      String
+  description String
+  contact   String
+  payments  String
+  contract  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user      BillingUser[]
+}
+
+model BillingUser {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  email     String
+  role      String
+  teamId    Int @unique
+  team      BillingTeam @relation(fields: [teamId], references: [id])
+  location  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model AccountUser {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  email     String
+  role      String
+  location  String
+  ips       String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  teamId    Int @unique
+  team      Team @relation(fields: [teamId], references: [id])
+}
+
