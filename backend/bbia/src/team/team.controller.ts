@@ -5,7 +5,7 @@ import { UpdateTeamDto } from './dto/update-team.dto';
 import { Team } from './entities/team.entity';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('team')
+@Controller('teams')
 export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 

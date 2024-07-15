@@ -5,7 +5,7 @@ import { UpdateServiceDto } from './dto/update-service.dto';
 import { Service } from './entities/service.entity';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('service')
+@Controller('services')
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 

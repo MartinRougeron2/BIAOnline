@@ -5,7 +5,7 @@ import { UpdateVendorDto } from './dto/update-vendor.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import { Vendor } from './entities/vendor.entity';
 
-@Controller('vendor')
+@Controller('vendors')
 export class VendorController {
   constructor(private readonly vendorService: VendorService) {}
 

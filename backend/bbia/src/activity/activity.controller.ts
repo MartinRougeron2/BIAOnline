@@ -7,7 +7,7 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 import { Activity } from './entities/activity.entity';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('activity')
+@Controller('activities')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 

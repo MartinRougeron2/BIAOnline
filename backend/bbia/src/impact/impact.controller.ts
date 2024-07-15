@@ -5,7 +5,7 @@ import { UpdateImpactDto } from './dto/update-impact.dto';
 import { Impact } from './entities/impact.entity';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('impact')
+@Controller('impacts')
 export class ImpactController {
   constructor(private readonly impactService: ImpactService) {}
 
