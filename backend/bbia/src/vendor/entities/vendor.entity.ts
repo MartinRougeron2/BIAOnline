@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Impact as Base } from "@prisma/client";
+import { Vendor as Base } from "@prisma/client";
 
 export class Vendor implements Base {
     @ApiProperty()
@@ -9,18 +9,27 @@ export class Vendor implements Base {
     name: string;
 
     @ApiProperty()
-    timeline: string[];
+    description: string;
 
     @ApiProperty()
-    impacts: number[];
+    contact: string;
+
+    @ApiProperty()
+    status: string;
+
+    @ApiProperty()
+    tags: string[];
+
+    @ApiProperty()
+    defaultRTO: number;
+
+    @ApiProperty()
+    defaultRPO: number;
 
     @ApiProperty()
     createdAt: Date;
 
     @ApiProperty()
     updatedAt: Date;
-
-    @ApiProperty()
-    activityId: number;
 
 }
