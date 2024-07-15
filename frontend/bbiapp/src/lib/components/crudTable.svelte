@@ -161,7 +161,8 @@
   .CRUDTable {
     margin-top: 1rem;
     background-color: rgb(190, 190, 190);
-    border-radius: 10px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
     border: 1px solid rgb(156, 156, 156);
   }
   td:last-child {

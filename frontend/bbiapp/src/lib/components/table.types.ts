@@ -7,7 +7,7 @@ type Data = {
 type Field = (agr: Data) => any;
 
 type Choices = {
-    value: string;
+    value: number | string;
     label: string;
 };
 
@@ -16,6 +16,7 @@ interface Column {
     color: string;
     type: Types;
     field: Field;
+    fieldName?: string;
     tableVisible?: boolean;
     formVisible?: boolean;
     choices?: Choices[];

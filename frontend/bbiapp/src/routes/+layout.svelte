@@ -1,18 +1,20 @@
 
 
 <div class="app">
-	<div class="header pt-2 bg-gray-100">
-		<Header></Header>
-	</div>
-	<div class="view h-full">
-		<div class="grid grid-flow-col auto-cols-min">
-			<div class="p-2">
-				<Sidebar></Sidebar>
+	<div>
+		<div class="header pt-2 bg-gray-100">
+			<Header></Header>
+		</div>
+		<div class="view h-full">
+			<div class="grid grid-flow-col auto-cols-min">
+				<div class="p-2">
+					<Sidebar></Sidebar>
+				</div>
+				
+				<main class="">
+					<slot></slot>
+				</main>
 			</div>
-			
-			<main class="">
-				<slot></slot>
-			</main>
 		</div>
 	</div>
 
@@ -30,7 +32,7 @@ import "../app.css";
 </script>
 <style>
 	.header {
-		height: 80px;
+		min-height: 80px;
 	}
 	.app {
 		display: flex;
@@ -39,16 +41,17 @@ import "../app.css";
 	}
 
 	main {
+		min-height: calc(100vh - 80px - 60px);
 	}
 
-
 	footer {
+		bottom: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: start;
 		align-items: self-start;
 		padding: 12px;
-		height: 60px;
+		min-height: 60px;
 	}
 
 	@media (min-width: 480px) {
