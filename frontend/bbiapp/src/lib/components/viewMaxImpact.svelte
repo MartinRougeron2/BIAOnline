@@ -49,7 +49,9 @@
                 fill: true,
                 backgroundColor: chartColors[index % chartColors.length],
                 tension: 0.01,
-                pointRadius: 4
+                pointRadius: 4,
+            pointBackgroundColor: 'rgb(0, 0, 0)',
+
             }
         })
     };

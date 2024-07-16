@@ -43,16 +43,7 @@
             interaction: {
                 mode: 'y'
             },
-            borderColor: function(context: any) {
-                const chart = context.chart;
-                const {ctx, chartArea} = chart;
-
-                if (!chartArea) {
-                // This case happens on initial chart load
-                return;
-                }
-                return getGradient(ctx, chartArea);
-            },
+            borderColor: 'rgb(30, 30, 30, 0.4)',
             fill: true,
             backgroundColor: function(context: any) {
                 const chart = context.chart;
@@ -68,7 +59,8 @@
             pointRadius: 4,
             pointHoverRadius: 10,
             // pointBorderColor: 'rgb(0, 0, 0)',
-            // pointBackgroundColor: 'rgb(245, 0, 11)',
+            pointBackgroundColor: 'rgb(0, 0, 0, 0.5)',
+            borderWidth: 2,
         }]
     };
 

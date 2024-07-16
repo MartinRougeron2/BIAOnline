@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Vendor } from "$lib/types/class/entities";
     import CrudTable from "$lib/components/crudTable.svelte";
     import type { Column, TableShape } from "$lib/components/table.types";
     import {numberSecToTime} from "$lib/utils";
@@ -8,38 +9,23 @@
     import { Button, Input } from "flowbite-svelte";
     import { PlusOutline } from "flowbite-svelte-icons";
 
-    class Vendor {        
-        id: number;
-        name: string;
-        description: string;
-        contact: string;
-        status: string;
-        tags: string[];
-        defaultrto: number;
-        defaultrpo: number;
-        createdAt: Date;
-        updatedAt: Date;
 
-    constructor(id: number, name: string, description: string, contact: string, status: string, tags: string[], defaultrto: number, defaultrpo: number, createdAt: Date, updatedAt: Date) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.contact = contact;
-        this.status = status;
-        this.tags = tags;
-        this.defaultrto = defaultrto;
-        this.defaultrpo = defaultrpo;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    }
     let mockData: Vendor[] = [
-        new Vendor(1, 'Vendor 1', 'Vendor 1 description', 'Contact 1', 'Active', ['tag1', 'tag2'], 5678889999, 665, new Date(), new Date()),
-        new Vendor(2, 'Vendor 2', 'Vendor 2 description', 'Contact 2', 'Active', ['tag1', 'tag2'], 55556, 5, new Date(), new Date()),
-        new Vendor(3, 'Vendor 3', 'Vendor 3 description', 'Contact 3', 'Active', ['tag1', 'tag2'], 55556, 5, new Date(), new Date()),
-        new Vendor(4, 'Vendor 4', 'Vendor 4 description', 'Contact 4', 'Active', ['tag1', 'tag2'], 55556, 5, new Date(), new Date()),
-        new Vendor(5, 'Vendor 5', 'Vendor 5 description', 'Contact 5', 'Active', ['tag1', 'tag2'], 55556, 5, new Date(), new Date()),
+        new Vendor(
+            { id: 1, name: 'Vendor 1', description: 'Vendor 1 description', contact: 'Contact 1', status: 'Active', tags: ['tag1', 'tag2'], defaultRTO: 5678889999, defaultRPO: 665, createdAt: new Date(), updatedAt: new Date() }
+        ),
+        new Vendor(
+            { id: 2, name: 'Vendor 2', description: 'Vendor 2 description', contact: 'Contact 2', status: 'Active', tags: ['tag1', 'tag2'], defaultRTO: 55556, defaultRPO: 5, createdAt: new Date(), updatedAt: new Date() }
+        ),
+        new Vendor(
+            { id: 3, name: 'Vendor 3', description: 'Vendor 3 description', contact: 'Contact 3', status: 'Active', tags: ['tag1', 'tag2'], defaultRTO: 345, defaultRPO: 5465, createdAt: new Date(), updatedAt: new Date() }
+        ),
+        new Vendor(
+            { id: 4, name: 'Vendor 4', description: 'Vendor 4 description', contact: 'Contact 4', status: 'Active', tags: ['tag1', 'tag2'], defaultRTO: 236785, defaultRPO: 234567875, createdAt: new Date(), updatedAt: new Date() }
+        ),
+        new Vendor(
+            { id: 5, name: 'Vendor 5', description: 'Vendor 5 description', contact: 'Contact 5', status: 'Active', tags: ['tag1', 'tag2'], defaultRTO: 5678905, defaultRPO: 4565, createdAt: new Date(), updatedAt: new Date() }
+        ),
     ];
 
     let tableShape: TableShape = {
@@ -50,8 +36,8 @@
             { name: 'Contact', color: 'blue', type: Types.text, field: (data: Vendor) => data.contact },
             { name: 'Status', color: 'blue', type: Types.text, field: (data: Vendor) => data.status },
             { name: 'Tags', color: 'blue', type: Types.tags, field: (data: Vendor) => data.tags },
-            { name: 'Default RTO', color: 'blue', type: Types.number, field: (data: Vendor) => numberSecToTime(data.defaultrto) },
-            { name: 'Default RPO', color: 'blue', type: Types.number, field: (data: Vendor) => numberSecToTime(data.defaultrpo) },
+            { name: 'Default RTO', color: 'blue', type: Types.number, field: (data: Vendor) => numberSecToTime(data.defaultRTO), fieldName: 'defaultRTO' },
+            { name: 'Default RPO', color: 'blue', type: Types.number, field: (data: Vendor) => numberSecToTime(data.defaultRPO), fieldName: 'defaultRPO' },
             { name: 'Created At', color: 'blue', type: Types.date, field: (data: Vendor) => data.createdAt.toLocaleDateString(), formVisible: false, tableVisible: false },
         ],
         actions: [Actions.edit, Actions.delete],
@@ -61,7 +47,9 @@
 
     let createModalState: boolean = false;
 
-    let createData: Vendor = new Vendor(0, '', '', '', '', [], 0, 0, new Date(), new Date());
+    let createData: Vendor = new Vendor(
+        { id: 0, name: '', description: '', contact: '', status: '', tags: [], defaultRTO: 0, defaultRPO: 0, createdAt: new Date(), updatedAt: new Date() }
+    );
 </script>
 <main>
     <div class="vendors">
