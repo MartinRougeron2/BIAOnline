@@ -49,6 +49,7 @@
                 fill: true,
                 backgroundColor: chartColors[index % chartColors.length],
                 tension: 0.01,
+                pointRadius: 4
             }
         })
     };

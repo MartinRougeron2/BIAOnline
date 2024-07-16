@@ -41,6 +41,9 @@ export class ActivityService {
       where: {
         id: completeActivityDto.id,
       },
+      include: {
+        services: true,
+      },
       data: {
         RTO: completeActivityDto.RTO,
         RPO: completeActivityDto.RPO,
@@ -56,6 +59,10 @@ export class ActivityService {
     return this.prisma.activity.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        services: true,
+        teams: true,
       },
     });
   }

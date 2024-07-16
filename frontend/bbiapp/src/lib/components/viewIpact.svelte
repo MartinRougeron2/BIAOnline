@@ -65,16 +65,18 @@
                 return getGradient(ctx, chartArea);
             },
             tension: 0.31,
-            pointRadius: 5,
+            pointRadius: 4,
             pointHoverRadius: 10,
-            pointBorderColor: 'rgb(0, 0, 0)',
-            pointBackgroundColor: 'rgb(245, 0, 11)',
+            // pointBorderColor: 'rgb(0, 0, 0)',
+            // pointBackgroundColor: 'rgb(245, 0, 11)',
         }]
     };
 
     $: options = {
         scales: {
             y: {
+                includeZero: true,
+                intersect: false,
                 beginAtZero: true,
                 max: impact.scaleMax + 1,
                 min: impact.scaleMin,

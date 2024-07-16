@@ -30,72 +30,72 @@
                 },
                 {
                     time: 7200,
-                    impactSize:0
+                    impactSize:1
                 },
                 {
                     time: 10800,
-                    impactSize:0
+                    impactSize:2
                 },
                 {
                     time: 14400,
-                    impactSize:0
+                    impactSize:3
                 },
                 {
                     time: 18000,
-                    impactSize:0
+                    impactSize:4
                 },
                 {
                     time: 21600,
-                    impactSize:0
+                    impactSize:5
                 },
                 {
                     time: 25200,
-                    impactSize:0
+                    impactSize:5
                 },
                 {
                     time: 43200,
-                    impactSize: 0
+                    impactSize:5
                 },
                 {
                     time: 46800,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 50400,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 54000,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 57600,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 61200,
-                    impactSize: 0
+                    impactSize: 6
                 },
                 {
                     time: 64800,
-                    impactSize: 0
+                    impactSize: 7
                 },
                 {
                     time: 68400,
-                    impactSize: 0
+                    impactSize: 8
                 },
                 {
                     time: 72000,
-                    impactSize: 0
+                    impactSize: 8
                 },
                 
                 {
                     time: 86400,
-                    impactSize: 0
+                    impactSize: 9
                 },
                 {
                     time: 129600,
-                    impactSize: 0
+                    impactSize: 10
                 }
             ]
 
@@ -117,26 +117,25 @@
                 '#FF0000',  // Red
                 '#CC0000'   // Extreme Red
             ],
-            impacts: [
-                {
+            impacts:                 [{
                     time: 3600,
                     impactSize: 0
                 },
                 {
                     time: 7200,
-                    impactSize:0
+                    impactSize:1
                 },
                 {
                     time: 10800,
-                    impactSize:0
+                    impactSize:2
                 },
                 {
                     time: 14400,
-                    impactSize:5
+                    impactSize:3
                 },
                 {
                     time: 18000,
-                    impactSize:5
+                    impactSize:4
                 },
                 {
                     time: 21600,
@@ -144,52 +143,52 @@
                 },
                 {
                     time: 25200,
-                    impactSize:0
+                    impactSize:5
                 },
                 {
                     time: 43200,
-                    impactSize: 0
+                    impactSize:5
                 },
                 {
                     time: 46800,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 50400,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 54000,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 57600,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 61200,
-                    impactSize: 0
+                    impactSize: 6
                 },
                 {
                     time: 64800,
-                    impactSize: 0
+                    impactSize: 7
                 },
                 {
                     time: 68400,
-                    impactSize: 0
+                    impactSize: 8
                 },
                 {
                     time: 72000,
-                    impactSize: 0
+                    impactSize: 8
                 },
                 
                 {
                     time: 86400,
-                    impactSize: 0
+                    impactSize: 9
                 },
                 {
                     time: 129600,
-                    impactSize: 0
+                    impactSize: 10
                 }
             ]
 
@@ -218,72 +217,72 @@
                 },
                 {
                     time: 7200,
-                    impactSize:0
+                    impactSize:1
                 },
                 {
                     time: 10800,
-                    impactSize:0
+                    impactSize:2
                 },
                 {
                     time: 14400,
-                    impactSize:0
+                    impactSize:3
                 },
                 {
                     time: 18000,
-                    impactSize:0
+                    impactSize:4
                 },
                 {
                     time: 21600,
-                    impactSize:0
+                    impactSize:5
                 },
                 {
                     time: 25200,
-                    impactSize:0
+                    impactSize:5
                 },
                 {
                     time: 43200,
-                    impactSize: 0
+                    impactSize:5
                 },
                 {
                     time: 46800,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 50400,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 54000,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 57600,
-                    impactSize: 0
+                    impactSize: 5
                 },
                 {
                     time: 61200,
-                    impactSize: 0
+                    impactSize: 6
                 },
                 {
                     time: 64800,
-                    impactSize: 0
+                    impactSize: 7
                 },
                 {
                     time: 68400,
-                    impactSize: 0
+                    impactSize: 8
                 },
                 {
                     time: 72000,
-                    impactSize: 0
+                    impactSize: 8
                 },
                 
                 {
                     time: 86400,
-                    impactSize: 0
+                    impactSize: 9
                 },
                 {
                     time: 129600,
-                    impactSize: 0
+                    impactSize: 10
                 }
             ]
         }
