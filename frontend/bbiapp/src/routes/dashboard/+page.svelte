@@ -292,5 +292,5 @@
 </script>
 
 <main>
-    <EditImpacts impacts={impactsInit} modalState={modalState} />
+    
 </main>
