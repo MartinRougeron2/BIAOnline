@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Range, Card } from "flowbite-svelte";
   import type { ImpactType } from "./impactEvaulation.types";
   import { numberSecToTime } from "$lib/utils";
 
