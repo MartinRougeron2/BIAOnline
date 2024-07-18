@@ -6,7 +6,7 @@ export interface ImpactEntity  {
     name: string;
 
     
-    timeline: string[];
+    timeline: number[];
 
     
     impacts: number[];

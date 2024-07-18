@@ -69,9 +69,16 @@
         },
         plugins: {
             legend: {
-                display: false
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Impact Evaluation Maximum',
+                    font: {
+                        size: 20
+                    }
+                }
             }
-        }
+        },
     };
 
 </script>

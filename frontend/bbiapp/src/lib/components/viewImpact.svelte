@@ -8,6 +8,10 @@
     import type { ImpactType } from "$lib/components/impactEvaulation.types";
 
     export let impact: ImpactType;
+    export let heightCanvas: number;
+    export let noname: boolean = false;
+
+    console.log(noname);
 
     let width: number, height: number, gradient: any;
     function getGradient(ctx: any, chartArea: any) {
@@ -65,6 +69,8 @@
     };
 
     $: options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             y: {
                 includeZero: true,
@@ -80,12 +86,19 @@
         plugins: {
             legend: {
                 display: false
+            },
+            title: {
+                display: !noname,
+                text: impact.name,
+                font: {
+                    size: 20
+                }
             }
         }
     };
 
 </script>
 
-<div class="flex flex-col impact-view">
+<div class="flex flex-col impact-view" style="height: {heightCanvas}px">
     <Line {data} {options} />
 </div>

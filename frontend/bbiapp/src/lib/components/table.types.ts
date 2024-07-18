@@ -1,4 +1,5 @@
-import type { Types, Actions } from "./table.enums";
+import type { SvelteComponent } from "svelte";
+import type { Types, Actions, Position } from "./table.enums";
 
 type Data = {
    id: number;
@@ -20,6 +21,7 @@ interface Column {
     tableVisible?: boolean;
     formVisible?: boolean;
     choices?: Choices[];
+    position?: Position;
 }
 
 interface TableShape {
@@ -27,6 +29,7 @@ interface TableShape {
     actions: Actions[];
     endpoint: string;
     titleColumn: string;
+    detailComponent?: any;
 }
 
 export type { Column, TableShape, Data, Field };

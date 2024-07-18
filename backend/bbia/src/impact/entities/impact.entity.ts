@@ -9,7 +9,7 @@ export class Impact implements Base {
     name: string;
 
     @ApiProperty()
-    timeline: string[];
+    timeline: number[];
 
     @ApiProperty()
     impacts: number[];

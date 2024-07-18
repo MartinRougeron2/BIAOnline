@@ -2,7 +2,7 @@
     import { Button } from "flowbite-svelte";
     import EditImpacts from "$lib/components/editImpacts.svelte";
     import ViewMaxImpact from "$lib/components/viewMaxImpact.svelte";
-    import ImpactView from "$lib/components/viewIpact.svelte";
+    import ImpactView from "$lib/components/viewImpact.svelte";
   import type { ImpactType } from "$lib/components/impactEvaulation.types";
 
     let impactsInit : ImpactType[] = [
@@ -299,19 +299,15 @@
     </div>
     <div class="grid grid-cols-6 gap-4 mt-4 impacts">
         <div class="col-span-3">
-            <p class="text-lg">{impactsInit[0].name}</p>
             <ImpactView bind:impact={impactsInit[0]} />
         </div>
         <div class="col-span-3">
-            <p class="text-lg">{impactsInit[1].name}</p>
             <ImpactView bind:impact={impactsInit[1]} />
         </div>
         <div class="col-span-3">
-            <p class="text-lg">{impactsInit[2].name}</p>
             <ImpactView bind:impact={impactsInit[2]} />
         </div>
         <div class="col-span-3">
-            <p class="text-lg">Max Impact</p>
             <ViewMaxImpact bind:impacts={impactsInit} />
         </div>
     </div>

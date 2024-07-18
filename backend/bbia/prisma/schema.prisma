@@ -11,7 +11,7 @@ datasource db {
 model Impact {
   id        Int      @id @default(autoincrement())
   name      String
-  timeline  String[]
+  timeline  Int[]
   impacts   Int[]
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())

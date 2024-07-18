@@ -8,7 +8,7 @@ export class CreateImpactDto {
     activityId: number;
 
     @ApiProperty()
-    timeline: string[];
+    timeline: number[];
     
     @ApiProperty()
     impacts: number[];

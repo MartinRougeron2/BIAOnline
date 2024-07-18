@@ -9,6 +9,17 @@ enum Types {
     date = 'date',
     select = 'select',
     tags = 'tags',
+    list = 'list',
+    boolean = 'boolean',
+    impact = 'impact',
+    criticality = 'criticality',
 }
+
+export enum Position {
+    left = 'left',
+    right = 'right',
+    center = 'center',
+}
+
 
 export { Actions, Types };

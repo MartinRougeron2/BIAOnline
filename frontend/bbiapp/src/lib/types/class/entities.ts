@@ -59,7 +59,7 @@ class Impact implements ImpactEntity {
     id: number;
     name: string;
     updatedAt: Date;
-    timeline: string[];
+    timeline: number[];
     impacts: number[];
     createdAt: Date;
     activityId: number;
