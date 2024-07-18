@@ -14,7 +14,7 @@
 
   import type { Data, TableShape } from "./table.types";
   import { Actions, Types } from "./table.enums";
-  import { TrashBinSolid } from "flowbite-svelte-icons";
+  import { AngleDownOutline, TrashBinSolid, AngleUpOutline } from "flowbite-svelte-icons";
   import ModalColumns from "./modalColumns.svelte";
   import ViewImpact from "./viewImpact.svelte";
   import type { ImpactType } from "./impactEvaulation.types";
@@ -95,9 +95,12 @@
 </script>
 
 <div class="CRUDTable">
-  <Table striped>
+  <Table>
     <TableHead>
       <TableHeadCell class="py-4">
+        {#if TableShape.actions.includes(Actions.expand)}
+            <AngleDownOutline />
+        {:else}
         <Checkbox
           on:change={() =>
             (checkItems = checkItems.every((item) => item)
@@ -105,6 +108,7 @@
               : TableData.map(() => true))}
           checked={checkItems.every((item) => item)}
         />
+        {/if}
       </TableHeadCell>
       {#each TableShape.columns as item}
         {#if item.tableVisible !== false}
@@ -115,13 +119,29 @@
     </TableHead>
     <TableBody>
       {#each TableData as item, index}
-        <TableBodyRow on:click={() => toggleRow(index)}>
+        <TableBodyRow class="{openRow === index ? 'bg-blue-100' : index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-50'} hover:bg-blue-100">
           <TableBodyCell class="py-4">
-            <Checkbox
-              on:change={() => (checkItems[index] = !checkItems[index])}
-              checked={checkItems[index]}
-              on:click={(e) => e.stopPropagation()}
-            />
+            {#if TableShape.actions.includes(Actions.expand)}
+                <Button
+                    color="blue"
+                    size="xs"
+                    outline
+                    pill
+                    on:click={() => toggleRow(index)}
+                >
+                   {#if openRow === index}
+                        <AngleUpOutline />
+                    {:else}
+                        <AngleDownOutline />
+                    {/if}
+                </Button>
+            {:else}
+                <Checkbox
+                    on:change={() => (checkItems[index] = !checkItems[index])}
+                    checked={checkItems[index]}
+                    on:click={(e) => e.stopPropagation()}
+                />
+            {/if}
           </TableBodyCell>
           {#each TableShape.columns as column}
             {#if column.tableVisible !== false}

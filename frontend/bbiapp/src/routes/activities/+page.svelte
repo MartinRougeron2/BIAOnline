@@ -147,7 +147,7 @@
             { name: 'Frequency', color: 'blue', type: Types.text, field: (data: Activity) => data.frequency, tableVisible: false },
             { name: 'Tags', color: 'blue', type: Types.tags, field: (data: Activity) => data.tags },
         ],
-        actions: [Actions.edit, Actions.delete],
+        actions: [Actions.edit, Actions.delete, Actions.expand],
         endpoint: '/services',
         titleColumn: 'Name',
         detailComponent: ActivityGet,
