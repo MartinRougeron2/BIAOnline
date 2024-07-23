@@ -15,15 +15,15 @@
     let mockData: Activity[] = [
         new Activity({ id: 1, name: 'Activity 1',
          description: 'Activity 1 description', 
-         owner: 'Owner 1', status: 'Active', location: 'Location 1', RTO: 57888, RPO: 665
+         owner: 'Owner 1', status: 'Active', location: 'Location 1', RTO: 3600*4, RPO: 665
          , tags: ['tag1', 'tag2'], createdAt: new Date(), updatedAt: new Date(), criticality: 'High',
          validation: 'Mr. John Doe', volume: '4500 / 5000', frequency: 'Daily',
          services: [
-             { id: 1, name: 'Service 1', RTO: 67888, RPO: 665 },
+             { id: 1, name: 'Service 1', RTO: 78900, RPO: 665 },
              { id: 2, name: 'Service 2', RTO: 56788, RPO: 665 },
-             { id: 3, name: 'Service 3', RTO: 58, RPO: 665 },
-             { id: 4, name: 'Service 4', RTO: 568, RPO: 665 },
-             { id: 5, name: 'Service 5', RTO: 56888, RPO: 665 },
+             { id: 3, name: 'Service 3', RTO: 32336, RPO: 665 },
+             { id: 4, name: 'Service 4', RTO: 76188, RPO: 665 },
+             { id: 5, name: 'Service 5', RTO: 12345, RPO: 665 },
          ],
          teams: [
              { id: 1, name: 'Team 1' },
@@ -189,7 +189,7 @@
         </span>
 		<div class="mt-4">
 			<span class="text-lg font-bold">RTO: {numberSecToTime(mockData[0].RTO)}</span>
-			<Range min={1} max={Math.max(...mockData[0].impacts.map(impact => Math.max(...impact.timeline)))} bind:value={mockData[0].RTO} />
+			<Range min={0} max={Math.max(...mockData[0].impacts.map(impact => Math.max(...impact.timeline)))} bind:value={mockData[0].RTO} step={3600} />
 			<ActivityGet item={mockData[0]} />
 		</div>
 </main>

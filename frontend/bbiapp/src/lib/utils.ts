@@ -19,7 +19,7 @@ function numberSecToTime(sec: number) {
     if (days > 0) time += days + 'd ';
     if (hours > 0) time += hours + 'h ';
     if (minutes > 0) time += minutes + 'm ';
-    if (seconds > 0) time += seconds + 's';
+    if (seconds > 0 && (years === 0 && months === 0 && weeks === 0 && days === 0 && hours === 0)) time += seconds + 's';
 
     return time;
 }

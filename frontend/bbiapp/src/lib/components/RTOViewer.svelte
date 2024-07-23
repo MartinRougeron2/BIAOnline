@@ -4,6 +4,7 @@
 
     import { Bar, Line } from "svelte-chartjs";
     import "chart.js/auto";
+    import 'chartjs-adapter-moment';
   import type { ImpactActivity } from "$lib/types/entities/impact.entity";
   import type { ImpactType } from "./impactEvaulation.types";
   import type { ServiceActivity } from "$lib/types/entities/service.entity";
@@ -74,16 +75,8 @@
             
             return hash;
         };
-        let hash = hashF(str) ** hashF(str)
-        for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        let color = '#';
-        for (let i = 0; i < 3; i++) {
-            let value = (hash >> (i * 8)) & 0xff;
-            color += ('00' + value.toString(16)).substr(-2);
-        }
-        return color;
+        let hash = hashF(str) ** 2 % 0xffffff;
+        return '#' + hash.toString(16);
     }
 
     // [1, 2, 3] <=> [1, 8, 10] => [1, 1, 1, 2, 3, 3] <=> [1, 2, 3, 8, 10, 11]
@@ -118,7 +111,12 @@
             return {
                 type: 'line',
                 label: impact.name,
-                data: factoryImpact(impact.impacts.map(impact => impact.impactSize), xAxisImpacts, xAxis),
+                data: factoryImpact(impact.impacts.map(impact => impact.impactSize), xAxisImpacts, xAxis).map((impact, index) => {
+                    return {
+                        x: xAxis[index],
+                        y: impact
+                    }
+                }),
                 interaction: {
                     mode: 'y'
                 },
@@ -138,7 +136,10 @@
     $: RTOVertical = {
         type: 'bar',
         label: 'RTO: ' + numberSecToTime(activity.RTO),
-        data: setIndexBar(activity.RTO, xAxis),
+        data: [{
+            x: activity.RTO,
+            y: maxImpact(activity.impacts)
+        }],
         // red visible line (small width)
         borderColor: 'rgb(255, 0, 0)',
         backgroundColor: 'rgb(255, 0, 0)',
@@ -152,7 +153,12 @@
         const dataReshaped = factoryImpact([1], [service.RTO], xAxis).filter(data => data !== 0);
         return {
             label: service.name + ' : ' + numberSecToTime(service.RTO),
-            data: Array(xAxis.length - dataReshaped.length + 1).fill(service.name),
+            data: Array(xAxis.length - dataReshaped.length + 1).fill(service.name).map((name, index) => {
+                return {
+                    x: xAxis[index],
+                    y: name
+                }
+            }),
             tension: 0.01,
             pointRadius: 0.5,
             borderWidth: 5,
@@ -200,11 +206,18 @@
                 stack: 't',
                 border: {
                     color: 'black',
+                    width: 1
                 },
                 // on draw i
             },
             x: {
-                beginAtZero: true,
+                type: 'timeseries',
+                position: 'bottom',
+                ticks: {
+                    callback: function(value: number, index: number, values: number[]) {
+                    return numberSecToTime(value);
+                    }
+                }
             },
             xRTORange: {
                 type: 'linear',
@@ -219,6 +232,23 @@
             legend: {
                 display: true,
                 position: 'right',
+            },
+            tooltip: {
+                callbacks: {
+                    title: function(context: any) {   
+                        console.log(context);      
+                        if (context[0].dataset.yAxisID === 'y2') {
+                            return context[0].raw.y + ': RTO' ;
+                        }
+                        return context[0].dataset.label;
+                    },
+                    label: function(context: any) {
+                        if (context.dataset.yAxisID === 'y2') {
+                            return 'RTO: ' + numberSecToTime(context.raw.x);
+                        }
+                        return 'Impact: ' + context.raw.y;
+                    }
+                }
             }
         }
     };
