@@ -8,7 +8,7 @@
     import type { ImpactType } from "$lib/components/impactEvaulation.types";
 
     export let impact: ImpactType;
-    export let heightCanvas: number;
+    export let heightCanvas: number = 200;
     export let noname: boolean = false;
 
     console.log(noname);

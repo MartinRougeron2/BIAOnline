@@ -1,4 +1,4 @@
-export interface ImpactEntity  {
+interface ImpactEntity  {
     
     id: number;
 
@@ -21,3 +21,13 @@ export interface ImpactEntity  {
     activityId: number;
 
 }
+
+
+type ImpactActivity = {
+    id: number;
+    name: string;
+    timeline: number[];
+    impacts: number[];
+}
+
+export type { ImpactEntity, ImpactActivity }

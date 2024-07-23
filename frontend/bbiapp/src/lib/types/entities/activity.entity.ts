@@ -1,6 +1,6 @@
-import type { ImpactEntity } from "./impact.entity";
-import type { ServiceEntity } from "./service.entity";
-import type { TeamEntity } from "./team.entity";
+import type { ImpactActivity } from "./impact.entity";
+import type { ServiceActivity } from "./service.entity";
+import type { TeamActivity } from "./team.entity";
 
 export interface ActivityEntity  {
     id: number;
@@ -18,7 +18,7 @@ export interface ActivityEntity  {
     tags: string[];
     createdAt: Date;
     updatedAt: Date;
-    services: Partial<ServiceEntity>[];
-    teams: Partial<TeamEntity>[];
-    impacts: Partial<ImpactEntity>[];
+    services: ServiceActivity[];
+    teams: TeamActivity[];
+    impacts: ImpactActivity[];
 }

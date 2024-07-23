@@ -71,6 +71,8 @@
         defaultRPO: 0,
         defaultRTO: 0,
     } });
+
+    let checkItems: number[] = [];
 </script>
 <main>
     <div class="vendors">
@@ -85,7 +87,7 @@
             </Button>
         </div>
         
-        <CrudTable TableShape={tableShape} TableData={mockData} />
+        <CrudTable TableShape={tableShape} TableData={mockData} bind:checkItems={checkItems} />
 
         <ModalColumns columns={tableShape.columns} dataToEdit={createData} title="Create New Service" modalState={createModalState} />
     </div>

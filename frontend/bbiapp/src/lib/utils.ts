@@ -1,4 +1,9 @@
+import type { ImpactType } from "./components/impactEvaulation.types";
+import type { ImpactActivity } from "./types/entities/impact.entity";
+
 function numberSecToTime(sec: number) {
+    if (sec <= 0) return '0s';
+
     const years = Math.floor(sec / 31536000);
     const months = Math.floor((sec % 31536000) / 2592000);
     const weeks = Math.floor(((sec % 31536000) % 2592000) / 604800);
@@ -19,4 +24,20 @@ function numberSecToTime(sec: number) {
     return time;
 }
 
-export { numberSecToTime };
+
+function impactsTimelineToImpactType(impactE: ImpactActivity, max: number): ImpactType {
+    return {
+      name: impactE.name,
+        impacts: impactE.impacts.map((impact, index) => {
+            return {
+            time: impactE.timeline[index],
+            impactSize: impact,
+            };
+        }),
+      scaleMin: 0,
+      scaleMax: max,
+      colors: ["#FF0000", "#00FF00"],
+    };
+  }
+
+export { numberSecToTime, impactsTimelineToImpactType };

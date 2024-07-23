@@ -1,4 +1,4 @@
-export interface TeamEntity {
+interface TeamEntity {
     
     id: number;
 
@@ -27,3 +27,10 @@ export interface TeamEntity {
     updatedAt: Date;
 
 }
+
+type TeamActivity = {
+    id: number;
+    name: string;
+}
+
+export type { TeamEntity, TeamActivity }

@@ -50,6 +50,8 @@
     let createData: Vendor = new Vendor(
         { id: 0, name: '', description: '', contact: '', status: '', tags: [], defaultRTO: 0, defaultRPO: 0, createdAt: new Date(), updatedAt: new Date() }
     );
+
+    let checkItems: number[] = [];
 </script>
 <main>
     <div class="vendors">
@@ -64,7 +66,7 @@
             </Button>
         </div>
         
-        <CrudTable TableShape={tableShape} TableData={mockData} />
+        <CrudTable TableShape={tableShape} TableData={mockData} bind:checkItems={checkItems} />
 
         <ModalColumns columns={tableShape.columns.slice(1)} dataToEdit={createData} title="Create New Team" modalState={createModalState} />
     </div>

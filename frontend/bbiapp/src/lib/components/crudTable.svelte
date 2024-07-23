@@ -14,16 +14,18 @@
 
   import type { Data, TableShape } from "./table.types";
   import { Actions, Types } from "./table.enums";
-  import { AngleDownOutline, TrashBinSolid, AngleUpOutline } from "flowbite-svelte-icons";
+  import { AngleDownOutline, TrashBinSolid, AngleUpOutline, ZoomInOutline, EditOutline } from "flowbite-svelte-icons";
   import ModalColumns from "./modalColumns.svelte";
   import ViewImpact from "./viewImpact.svelte";
   import type { ImpactType } from "./impactEvaulation.types";
   import type { ImpactEntity } from "$lib/types/entities/impact.entity";
   import ViewMaxImpact from "./viewMaxImpact.svelte";
   import { onMount, type ComponentType } from "svelte";
+  import { impactsTimelineToImpactType } from "$lib/utils";
 
   export let TableShape: TableShape;
   export let TableData: Data[];
+  export let checkItems: number[];
 
   let searchValue = "";
 
@@ -36,22 +38,6 @@
   $: dataEdit = TableData[indexSelected];
   // $: dataEditTitle = TableShape.titleColumn;
   $: dataEditTitle = dataEdit[TableShape.titleColumn.toLowerCase()];
-
-
-  function impactsTimelineToImpactType(impactE: ImpactEntity, max: number): ImpactType {
-    return {
-      name: "Impacts",
-        impacts: impactE.impacts.map((impact, index) => {
-            return {
-            time: impactE.timeline[index],
-            impactSize: impact,
-            };
-        }),
-      scaleMin: 0,
-      scaleMax: max,
-      colors: ["#FF0000", "#00FF00"],
-    };
-  }
 
    function maxImpact(impacts: ImpactType[]) {
     return {
@@ -73,8 +59,6 @@
          colors: impacts[0].colors
      } as ImpactType;
     }
-
-  let checkItems: boolean[] = Array(TableData.length).fill(false);
 
   let openRow: number | null = null;
 
@@ -103,10 +87,11 @@
         {:else}
         <Checkbox
           on:change={() =>
-            (checkItems = checkItems.every((item) => item)
-              ? TableData.map(() => false)
-              : TableData.map(() => true))}
-          checked={checkItems.every((item) => item)}
+            {checkItems = checkItems?.length === TableData.length
+              ? []
+              : TableData.map((data) => data.id)
+          }}
+          checked={checkItems?.length === TableData.length}
         />
         {/if}
       </TableHeadCell>
@@ -115,7 +100,8 @@
           <TableHeadCell class="text-{item.position ?? "center"}">{item.name}</TableHeadCell>
         {/if}
       {/each}
-      <TableHeadCell>Actions</TableHeadCell>
+      <TableHeadCell class="text-center"
+      >Actions</TableHeadCell>
     </TableHead>
     <TableBody>
       {#each TableData as item, index}
@@ -137,8 +123,15 @@
                 </Button>
             {:else}
                 <Checkbox
-                    on:change={() => (checkItems[index] = !checkItems[index])}
-                    checked={checkItems[index]}
+                    on:change={() => {
+                        if (checkItems.includes(item.id)) {
+                            checkItems.push(item.id)
+                        } else {
+                            checkItems.filter(checks => checks !== item.id)
+                        }
+                    }
+                    }
+                    checked={checkItems?.includes(item.id)}
                     on:click={(e) => e.stopPropagation()}
                 />
             {/if}
@@ -150,6 +143,11 @@
                   {#each column.field(item) as tag}
                     <Badge rounded color="blue" class="mt-1">{tag}</Badge><br />
                   {/each}
+                {:else if column.type === Types.href}
+                    <a 
+                        href={TableShape.endpoint + "/" + item.id}
+                        class="text-blue-800 underline"
+                    >{column.field(item)}</a>
                 {:else if column.type === Types.list}
                     {#each column.field(item) as val, indexList}
                       <!-- {val} -->
@@ -178,6 +176,7 @@
             {/if}
           {/each}
           <TableBodyCell>
+            {#if TableShape.actions.includes(Actions.edit)}
             <Button
               color="blue"
               size="sm"
@@ -186,8 +185,10 @@
                 modalState = true;
                 state = Actions.edit;
                 e.stopPropagation();
-              }}>Edit</Button
-            >
+              }}>
+              <EditOutline />
+              </Button>
+            {/if}
             <Button
               color="red"
               size="sm"
@@ -198,7 +199,6 @@
                 e.stopPropagation();
               }}
             >
-              &nbsp;
               <TrashBinSolid />
             </Button>
           </TableBodyCell>

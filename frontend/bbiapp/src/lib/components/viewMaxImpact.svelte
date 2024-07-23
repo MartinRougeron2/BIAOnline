@@ -7,6 +7,8 @@
 
     export let impacts: ImpactType[];
 
+    export let heightCanvas: number = 200;
+
     const chartColors = [
         '#007bff',
         '#dc3545',
@@ -50,13 +52,14 @@
                 backgroundColor: chartColors[index % chartColors.length],
                 tension: 0.01,
                 pointRadius: 4,
-            pointBackgroundColor: 'rgb(0, 0, 0)',
-
+                pointBackgroundColor: 'rgb(0, 0, 0)',
             }
         })
     };
 
     $: options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             y: {
                 beginAtZero: true,
@@ -83,6 +86,6 @@
 
 </script>
 
-<div class="flex flex-col impact-view">
+<div class="flex flex-col impact-view" style="height: {heightCanvas}px">
     <Line {data} {options} />
 </div>

@@ -1,7 +1,7 @@
 import type { ActivityEntity } from "../entities/activity.entity";
-import type { ImpactEntity } from "../entities/impact.entity";
-import type { ServiceEntity } from "../entities/service.entity";
-import type { TeamEntity } from "../entities/team.entity";
+import type { ImpactEntity, ImpactActivity } from "../entities/impact.entity";
+import type { ServiceActivity, ServiceEntity } from "../entities/service.entity";
+import type { TeamActivity, TeamEntity } from "../entities/team.entity";
 import type { VendorEntity } from "../entities/vendor.entity";
 
 
@@ -114,7 +114,6 @@ class Service implements ServiceEntity {
     }
 }
 
-
 class Activity implements ActivityEntity {
     
     id: number;
@@ -124,9 +123,9 @@ class Activity implements ActivityEntity {
     tags: string[];
     createdAt: Date;
     updatedAt: Date;
-    impacts: Partial<ImpactEntity>[];
-    services: Partial<ServiceEntity>[];
-    teams: Partial<TeamEntity>[];
+    impacts: ImpactActivity[];
+    services: ServiceActivity[];
+    teams: TeamActivity[];
     criticality: string;
     owner: string;
     validation: string;
@@ -147,10 +146,10 @@ class Activity implements ActivityEntity {
         if (activity.impacts[0].id && activity.impacts[0].name && activity.impacts[0].timeline && activity.impacts[0].impacts) {
             this.impacts = activity.impacts.map((impact) => {
                 return {
-                    id: impact.id,
-                    name: impact.name,
-                    timeline: impact.timeline,
-                    impacts: impact.impacts,
+                    id: impact.id ?? 0,
+                    name: impact.name ?? "",
+                    timeline: impact.timeline ?? [],
+                    impacts: impact.impacts ?? [],
                 }
             });
         } else {

@@ -1,6 +1,6 @@
 import type { VendorEntity } from "./vendor.entity";
 
-export interface ServiceEntity  {
+interface ServiceEntity  {
     id: number;
     name: string;
     description: string;
@@ -15,3 +15,12 @@ export interface ServiceEntity  {
     updatedAt: Date;
     vendor: Partial<VendorEntity>;
 }
+
+type ServiceActivity = {
+    id: number;
+    name: string;
+    RTO: number;
+    RPO: number;
+}
+
+export type { ServiceEntity, ServiceActivity };

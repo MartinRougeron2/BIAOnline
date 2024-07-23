@@ -7,6 +7,7 @@ enum Types {
     text = 'text',
     number = 'number',
     date = 'date',
+    href = 'href',
     select = 'select',
     tags = 'tags',
     list = 'list',

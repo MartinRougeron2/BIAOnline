@@ -36,6 +36,9 @@
     let createModalState: boolean = false;
 
     let createData: Team = new Team({ id: 0, name: '', description: '', owner: '', status: '', membersnumber: 0, tags: [], createdAt: new Date(), updatedAt: new Date() });
+
+    let checkItems: number[] = [];
+
 </script>
 
 <main>
@@ -59,7 +62,7 @@
       </Button>
     </div>
 
-    <CrudTable TableShape={tableShape} TableData={mockData} />
+    <CrudTable TableShape={tableShape} TableData={mockData} bind:checkItems={checkItems} />
 
     <ModalColumns
       columns={tableShape.columns.slice(1)}
