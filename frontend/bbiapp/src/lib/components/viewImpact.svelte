@@ -70,6 +70,7 @@
 
     $: options = {
         responsive: true,
+        animation: false,
         maintainAspectRatio: false,
         scales: {
             y: {

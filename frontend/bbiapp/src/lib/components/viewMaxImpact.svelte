@@ -10,13 +10,13 @@
     export let heightCanvas: number = 200;
 
     const chartColors = [
-        '#007bff',
-        '#dc3545',
-        '#28a745',
-        '#ffc107',
-        '#6f42c1',
-        '#fd7e14',
-        '#17a2b8',
+        '#007bffaa',
+        '#dc3545aa',
+        '#28a745aa',
+        '#ffc107aa',
+        '#6f42c1aa',
+        '#fd7e14aa',
+        '#17a2b8aa',
     ];
 
     // $: maxImpacts = {
@@ -70,6 +70,7 @@
                 beginAtZero: true
             }
         },
+        animation: false,
         plugins: {
             legend: {
                 display: true,

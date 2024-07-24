@@ -20,9 +20,9 @@
          , tags: ['tag1', 'tag2'], createdAt: new Date(), updatedAt: new Date(), criticality: 'High',
          validation: 'Mr. John Doe', volume: '4500 / 5000', frequency: 'Daily',
          services: [
-             { id: 1, name: 'Service 1', RTO: 567888, RPO: 665 },
-             { id: 2, name: 'Service 2', RTO: 56788, RPO: 665 },
-             { id: 3, name: 'Service 3', RTO: 58, RPO: 665 },
+             { id: 1, name: 'Severine', RTO: 567888, RPO: 665 },
+             { id: 2, name: 'LCL 2', RTO: 56788, RPO: 665 },
+             { id: 3, name: 'Mimecast 1', RTO: 58, RPO: 665 },
              { id: 4, name: 'Service 4', RTO: 568, RPO: 665 },
              { id: 5, name: 'Service 5', RTO: 56888, RPO: 665 },
          ],
