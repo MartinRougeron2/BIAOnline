@@ -1,36 +1,26 @@
 interface TeamEntity {
-    
-    id: number;
+  id: number;
 
-    
-    name: string;
+  name: string;
 
-    
-    description: string;
+  description: string;
 
-    
-    owner: string;
+  owner: string;
 
-    
-    status: string;
+  status: string;
 
-    
-    membersnumber: number;
+  membersnumber: number;
 
-    
-    tags: string[];
+  tags: string[];
 
-    
-    createdAt: Date;
+  createdAt: Date;
 
-    
-    updatedAt: Date;
-
+  updatedAt: Date;
 }
 
 type TeamActivity = {
-    id: number;
-    name: string;
-}
+  id: number;
+  name: string;
+};
 
-export type { TeamEntity, TeamActivity }
+export type { TeamEntity, TeamActivity };

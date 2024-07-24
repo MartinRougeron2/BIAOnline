@@ -26,7 +26,7 @@
 
   function getLabels(
     impacts: ImpactActivity[],
-    services: ServiceActivity[]
+    services: ServiceActivity[],
   ): number[] {
     let scales: number[] = [0];
 
@@ -82,7 +82,7 @@
   function factoryImpact(
     data: number[],
     baseScale: number[],
-    newScale: number[]
+    newScale: number[],
   ) {
     let dataMap: { [key: number]: number } = {};
 
@@ -120,7 +120,7 @@
       data: factoryImpact(
         impact.impacts.map((impact) => impact.impactSize),
         xAxisImpacts,
-        xAxis
+        xAxis,
       ).map((impact, index) => {
         return {
           x: xAxis[index],
@@ -166,7 +166,7 @@
 
   $: serviceImpacts = activity.services.map((service) => {
     const dataReshaped = factoryImpact([1], [service.RTO], xAxis).filter(
-      (data) => data !== 0
+      (data) => data !== 0,
     );
     return {
       label: service.name + " : " + numberSecToTime(service.RTO),

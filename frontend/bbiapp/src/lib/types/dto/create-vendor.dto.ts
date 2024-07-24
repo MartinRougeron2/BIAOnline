@@ -1,25 +1,15 @@
-
-
 export interface CreateVendorDto {
-    
-    name: string;  
+  name: string;
 
-    
-    description: string;
+  description: string;
 
-    
-    contact: string;
+  contact: string;
 
-    
-    status: string;
+  status: string;
 
-    
-    tags: string[];
+  tags: string[];
 
-    
-    defaultRTO: number;
+  defaultRTO: number;
 
-    
-    defaultRPO: number;
-
+  defaultRPO: number;
 }

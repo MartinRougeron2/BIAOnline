@@ -1,34 +1,21 @@
-
-
 export interface CreateServiceDto {
-    
-    name: string;
+  name: string;
 
-    
-    description: string;
+  description: string;
 
-    
-    owner: string;
+  owner: string;
 
-    
-    status: string;
+  status: string;
 
-    
-    activitiesSpecificId: string[];
+  activitiesSpecificId: string[];
 
-    
-    location: string;
+  location: string;
 
-    
-    RTO: number;
+  RTO: number;
 
-    
-    RPO: number;
+  RPO: number;
 
-    
-    vendorId: number;
+  vendorId: number;
 
-    
-    tags: string[];
-
+  tags: string[];
 }

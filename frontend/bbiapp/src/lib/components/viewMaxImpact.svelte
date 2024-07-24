@@ -1,92 +1,91 @@
 <script lang="ts">
-    import { Line } from 'svelte-chartjs'
-    import 'chart.js/auto';
-    import { numberSecToTime } from "$lib/utils";
+  import { Line } from "svelte-chartjs";
+  import "chart.js/auto";
+  import { numberSecToTime } from "$lib/utils";
 
-    import type { ImpactType } from "$lib/components/impactEvaulation.types";
+  import type { ImpactType } from "$lib/components/impactEvaulation.types";
 
-    export let impacts: ImpactType[];
+  export let impacts: ImpactType[];
 
-    export let heightCanvas: number = 200;
+  export let heightCanvas: number = 200;
 
-    const chartColors = [
-        '#007bffaa',
-        '#dc3545aa',
-        '#28a745aa',
-        '#ffc107aa',
-        '#6f42c1aa',
-        '#fd7e14aa',
-        '#17a2b8aa',
-    ];
+  const chartColors = [
+    "#007bffaa",
+    "#dc3545aa",
+    "#28a745aa",
+    "#ffc107aa",
+    "#6f42c1aa",
+    "#fd7e14aa",
+    "#17a2b8aa",
+  ];
 
-    // $: maxImpacts = {
-    //         name: 'Max Impact',
-    //         impacts: impacts[0].impacts.map((impact, index) => {
-    //             let max = 0;
-    //             impacts.forEach(impact => {
-    //                 if (impact.impacts[index].impactSize > max) {
-    //                     max = impact.impacts[index].impactSize;
-    //                 }
-    //             });
-    //             return {
-    //                 time: impact.time,
-    //                 impactSize: max
-    //             }
-    //         }),
-    //         scaleMin: impacts[0].scaleMin,
-    //         scaleMax: impacts[0].scaleMax,
-    //         colors: impacts[0].colors
-    //     } as ImpactType;
-        
-    $: data = {
-        labels: impacts[0].impacts.map(impact => numberSecToTime(impact.time)),
-        datasets: [...impacts].map((impact, index) => {
-            return {
-                label: impact.name,
-                data: impact.impacts.map(impact => impact.impactSize),
-                interaction: {
-                    mode: 'y'
-                },
-                borderColor: chartColors[index % chartColors.length],
-                fill: true,
-                backgroundColor: chartColors[index % chartColors.length],
-                tension: 0.01,
-                pointRadius: 4,
-                pointBackgroundColor: 'rgb(0, 0, 0)',
-            }
-        })
-    };
+  // $: maxImpacts = {
+  //         name: 'Max Impact',
+  //         impacts: impacts[0].impacts.map((impact, index) => {
+  //             let max = 0;
+  //             impacts.forEach(impact => {
+  //                 if (impact.impacts[index].impactSize > max) {
+  //                     max = impact.impacts[index].impactSize;
+  //                 }
+  //             });
+  //             return {
+  //                 time: impact.time,
+  //                 impactSize: max
+  //             }
+  //         }),
+  //         scaleMin: impacts[0].scaleMin,
+  //         scaleMax: impacts[0].scaleMax,
+  //         colors: impacts[0].colors
+  //     } as ImpactType;
 
-    $: options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: impacts[0].scaleMax + 1,
-                min: impacts[0].scaleMin,
-            },
-            x: {
-                beginAtZero: true
-            }
+  $: data = {
+    labels: impacts[0].impacts.map((impact) => numberSecToTime(impact.time)),
+    datasets: [...impacts].map((impact, index) => {
+      return {
+        label: impact.name,
+        data: impact.impacts.map((impact) => impact.impactSize),
+        interaction: {
+          mode: "y",
         },
-        animation: false,
-        plugins: {
-            legend: {
-                display: true,
-                title: {
-                    display: true,
-                    text: 'Impact Evaluation Maximum',
-                    font: {
-                        size: 20
-                    }
-                }
-            }
-        },
-    };
+        borderColor: chartColors[index % chartColors.length],
+        fill: true,
+        backgroundColor: chartColors[index % chartColors.length],
+        tension: 0.01,
+        pointRadius: 4,
+        pointBackgroundColor: "rgb(0, 0, 0)",
+      };
+    }),
+  };
 
+  $: options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: impacts[0].scaleMax + 1,
+        min: impacts[0].scaleMin,
+      },
+      x: {
+        beginAtZero: true,
+      },
+    },
+    animation: false,
+    plugins: {
+      legend: {
+        display: true,
+        title: {
+          display: true,
+          text: "Impact Evaluation Maximum",
+          font: {
+            size: 20,
+          },
+        },
+      },
+    },
+  };
 </script>
 
 <div class="flex flex-col impact-view" style="height: {heightCanvas}px">
-    <Line {data} {options} />
+  <Line {data} {options} />
 </div>

@@ -11,10 +11,15 @@
   } from "flowbite-svelte";
   import { Modal, Button, Badge } from "flowbite-svelte";
 
-
   import type { Data, TableShape } from "./table.types";
   import { Actions, Types } from "./table.enums";
-  import { AngleDownOutline, TrashBinSolid, AngleUpOutline, ZoomInOutline, EditOutline } from "flowbite-svelte-icons";
+  import {
+    AngleDownOutline,
+    TrashBinSolid,
+    AngleUpOutline,
+    ZoomInOutline,
+    EditOutline,
+  } from "flowbite-svelte-icons";
   import ModalColumns from "./modalColumns.svelte";
   import ViewImpact from "./viewImpact.svelte";
   import type { ImpactType } from "./impactEvaulation.types";
@@ -39,26 +44,26 @@
   // $: dataEditTitle = TableShape.titleColumn;
   $: dataEditTitle = dataEdit[TableShape.titleColumn.toLowerCase()];
 
-   function maxImpact(impacts: ImpactType[]) {
+  function maxImpact(impacts: ImpactType[]) {
     return {
-         name: '',
-         impacts: impacts[0].impacts.map((impact, index) => {
-             let max = 0;
-             impacts.forEach(impact => {
-                 if (impact.impacts[index].impactSize > max) {
-                     max = impact.impacts[index].impactSize;
-                 }
-             });
-             return {
-                 time: impact.time,
-                 impactSize: max
-             }
-         }),
-         scaleMin: impacts[0].scaleMin,
-         scaleMax: impacts[0].scaleMax,
-         colors: impacts[0].colors
-     } as ImpactType;
-    }
+      name: "",
+      impacts: impacts[0].impacts.map((impact, index) => {
+        let max = 0;
+        impacts.forEach((impact) => {
+          if (impact.impacts[index].impactSize > max) {
+            max = impact.impacts[index].impactSize;
+          }
+        });
+        return {
+          time: impact.time,
+          impactSize: max,
+        };
+      }),
+      scaleMin: impacts[0].scaleMin,
+      scaleMax: impacts[0].scaleMax,
+      colors: impacts[0].colors,
+    } as ImpactType;
+  }
 
   let openRow: number | null = null;
 
@@ -68,14 +73,16 @@
 
   $: maxImpacts = TableData.map((item) => {
     return TableShape.columns
-        .filter((column) => column.type === Types.impact)
-        .map((column) => column.field(item).map((impactE: ImpactEntity) => {
-            return Math.max(...impactE.impacts);
-        })).flat()
-    }).flat();
+      .filter((column) => column.type === Types.impact)
+      .map((column) =>
+        column.field(item).map((impactE: ImpactEntity) => {
+          return Math.max(...impactE.impacts);
+        }),
+      )
+      .flat();
+  }).flat();
 
-    $: maxImpactSize = Math.max(...maxImpacts);
-
+  $: maxImpactSize = Math.max(...maxImpacts);
 </script>
 
 <div class="CRUDTable">
@@ -83,92 +90,114 @@
     <TableHead>
       <TableHeadCell class="py-4">
         {#if TableShape.actions.includes(Actions.expand)}
-            <AngleDownOutline />
+          <AngleDownOutline />
         {:else}
-        <Checkbox
-          on:change={() =>
-            {checkItems = checkItems?.length === TableData.length
-              ? []
-              : TableData.map((data) => data.id)
-          }}
-          checked={checkItems?.length === TableData.length}
-        />
+          <Checkbox
+            on:change={() => {
+              checkItems =
+                checkItems?.length === TableData.length
+                  ? []
+                  : TableData.map((data) => data.id);
+            }}
+            checked={checkItems?.length === TableData.length}
+          />
         {/if}
       </TableHeadCell>
       {#each TableShape.columns as item}
         {#if item.tableVisible !== false}
-          <TableHeadCell class="text-{item.position ?? "center"}">{item.name}</TableHeadCell>
+          <TableHeadCell class="text-{item.position ?? 'center'}"
+            >{item.name}</TableHeadCell
+          >
         {/if}
       {/each}
-      <TableHeadCell class="text-center"
-      >Actions</TableHeadCell>
+      <TableHeadCell class="text-center">Actions</TableHeadCell>
     </TableHead>
     <TableBody>
       {#each TableData as item, index}
-        <TableBodyRow class="{openRow === index ? 'bg-blue-100' : index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-50'} hover:bg-blue-100">
+        <TableBodyRow
+          class="{openRow === index
+            ? 'bg-blue-100'
+            : index % 2 === 0
+              ? 'bg-gray-100'
+              : 'bg-gray-50'} hover:bg-blue-100"
+        >
           <TableBodyCell class="py-4">
             {#if TableShape.actions.includes(Actions.expand)}
-                <Button
-                    color="blue"
-                    size="xs"
-                    outline
-                    pill
-                    on:click={() => toggleRow(index)}
-                >
-                   {#if openRow === index}
-                        <AngleUpOutline />
-                    {:else}
-                        <AngleDownOutline />
-                    {/if}
-                </Button>
+              <Button
+                color="blue"
+                size="xs"
+                outline
+                pill
+                on:click={() => toggleRow(index)}
+              >
+                {#if openRow === index}
+                  <AngleUpOutline />
+                {:else}
+                  <AngleDownOutline />
+                {/if}
+              </Button>
             {:else}
-                <Checkbox
-                    on:change={() => {
-                        if (checkItems.includes(item.id)) {
-                            checkItems.push(item.id)
-                        } else {
-                            checkItems.filter(checks => checks !== item.id)
-                        }
-                    }
-                    }
-                    checked={checkItems?.includes(item.id)}
-                    on:click={(e) => e.stopPropagation()}
-                />
+              <Checkbox
+                on:change={() => {
+                  if (checkItems.includes(item.id)) {
+                    checkItems.push(item.id);
+                  } else {
+                    checkItems.filter((checks) => checks !== item.id);
+                  }
+                }}
+                checked={checkItems?.includes(item.id)}
+                on:click={(e) => e.stopPropagation()}
+              />
             {/if}
           </TableBodyCell>
           {#each TableShape.columns as column}
             {#if column.tableVisible !== false}
-              <TableBodyCell class="py-4 px-1 text-{column.position ?? "center"}">
+              <TableBodyCell
+                class="py-4 px-1 text-{column.position ?? 'center'}"
+              >
                 {#if column.type === Types.tags}
                   {#each column.field(item) as tag}
                     <Badge rounded color="blue" class="mt-1">{tag}</Badge><br />
                   {/each}
                 {:else if column.type === Types.href}
-                    <a 
-                        href={TableShape.endpoint + "/" + item.id}
-                        class="text-blue-800 underline"
-                    >{column.field(item)}</a>
+                  <a
+                    href={TableShape.endpoint + "/" + item.id}
+                    class="text-blue-800 underline">{column.field(item)}</a
+                  >
                 {:else if column.type === Types.list}
-                    {#each column.field(item) as val, indexList}
-                      <!-- {val} -->
-                      {#if indexList % 2 === 0 && indexList !== 0}
-                        <br />
-                      {/if}
-                        <Badge rounded color="{colorVarients[indexList % colorVarients.length]}" class="ml-1">{val}</Badge>
-                    {/each}
-                {:else if column.type === Types.impact}
-                    <ViewImpact impact={maxImpact(
-                        column.field(item).map(impactE => impactsTimelineToImpactType(impactE, maxImpactSize)))} heightCanvas={100} noname={true} />
-                {:else if column.type === Types.criticality}
-                    {#if column.field(item) === "Critical"}
-                      <Badge rounded color="red" class="ml-1">Critical</Badge>
-                    {:else if column.field(item) === "High"}
-                      <Badge rounded color="yellow" class="ml-1">High</Badge>
-                    {:else if column.field(item) === "Medium"}
-                      <Badge rounded color="green" class="ml-1">Medium</Badge>
-                    {:else if column.field(item) === "Low"}
-                      <Badge rounded color="blue" class="ml-1">Low</Badge>
+                  {#each column.field(item) as val, indexList}
+                    <!-- {val} -->
+                    {#if indexList % 2 === 0 && indexList !== 0}
+                      <br />
                     {/if}
+                    <Badge
+                      rounded
+                      color={colorVarients[indexList % colorVarients.length]}
+                      class="ml-1">{val}</Badge
+                    >
+                  {/each}
+                {:else if column.type === Types.impact}
+                  <ViewImpact
+                    impact={maxImpact(
+                      column
+                        .field(item)
+                        .map((impactE) =>
+                          impactsTimelineToImpactType(impactE, maxImpactSize),
+                        ),
+                    )}
+                    heightCanvas={100}
+                    noname={true}
+                  />
+                {:else if column.type === Types.criticality}
+                  {#if column.field(item) === "Critical"}
+                    <Badge rounded color="red" class="ml-1">Critical</Badge>
+                  {:else if column.field(item) === "High"}
+                    <Badge rounded color="yellow" class="ml-1">High</Badge>
+                  {:else if column.field(item) === "Medium"}
+                    <Badge rounded color="green" class="ml-1">Medium</Badge>
+                  {:else if column.field(item) === "Low"}
+                    <Badge rounded color="blue" class="ml-1">Low</Badge>
+                  {/if}
                 {:else}
                   {column.field(item)}
                 {/if}
@@ -177,16 +206,17 @@
           {/each}
           <TableBodyCell>
             {#if TableShape.actions.includes(Actions.edit)}
-            <Button
-              color="blue"
-              size="sm"
-              on:click={(e) => {
-                indexSelected = index;
-                modalState = true;
-                state = Actions.edit;
-                e.stopPropagation();
-              }}>
-              <EditOutline />
+              <Button
+                color="blue"
+                size="sm"
+                on:click={(e) => {
+                  indexSelected = index;
+                  modalState = true;
+                  state = Actions.edit;
+                  e.stopPropagation();
+                }}
+              >
+                <EditOutline />
               </Button>
             {/if}
             <Button
@@ -206,13 +236,13 @@
         {#if openRow === index}
           <TableBodyRow on:dblclick={() => {}}>
             <TableBodyCell colspan={TableShape.columns.length + 2}>
-            {#if TableShape.detailComponent}
+              {#if TableShape.detailComponent}
                 <svelte:component this={TableShape.detailComponent} {item} />
-            {:else}
+              {:else}
                 <div>
-                    <p>Detail</p>
+                  <p>Detail</p>
                 </div>
-            {/if}
+              {/if}
             </TableBodyCell>
           </TableBodyRow>
         {/if}
@@ -224,7 +254,7 @@
       columns={TableShape.columns}
       dataToEdit={dataEdit}
       title="Edit {dataEditTitle}"
-    bind:modalState={modalState}
+      bind:modalState
     />
   {/if}
   {#if state === Actions.delete}

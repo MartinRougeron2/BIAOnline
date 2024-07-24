@@ -59,8 +59,10 @@
         ></div>
       {/each}
       {#if disable}
-      <div style="width: {lineLength + 20}px; height: 220px; background: rgba(255, 255, 255, 0.2); transform: translateY(0px); z-index: 2; position: absolute;">
-      </div>
+        <div
+          style="width: {lineLength +
+            20}px; height: 220px; background: rgba(255, 255, 255, 0.2); transform: translateY(0px); z-index: 2; position: absolute;"
+        ></div>
       {/if}
     </div>
     <div class="flex" style="border-radius: 5px;">

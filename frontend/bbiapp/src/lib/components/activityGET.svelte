@@ -14,7 +14,7 @@
   let modalState: boolean = false;
 
   $: dynamicImpacts = item.impacts.map((impact) =>
-    impactsTimelineToImpactType(impact, 5)
+    impactsTimelineToImpactType(impact, 5),
   );
 
   $: impactShow = false;
@@ -67,7 +67,7 @@
     <Range
       min={0}
       max={Math.max(
-        ...item.impacts.map((impact) => Math.max(...impact.timeline))
+        ...item.impacts.map((impact) => Math.max(...impact.timeline)),
       )}
       bind:value={item.RTO}
       step={3600}

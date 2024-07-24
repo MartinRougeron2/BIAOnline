@@ -1,15 +1,9 @@
-
-
 export interface CreateImpactDto {
-    
-    name: string;
+  name: string;
 
-    
-    activityId: number;
+  activityId: number;
 
-    
-    timeline: string[];
-    
-    
-    impacts: number[];
+  timeline: string[];
+
+  impacts: number[];
 }

@@ -288,7 +288,6 @@
   ];
 
   let modalState: boolean = false;
-
 </script>
 
 <main>

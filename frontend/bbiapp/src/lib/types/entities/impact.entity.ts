@@ -1,33 +1,24 @@
-interface ImpactEntity  {
-    
-    id: number;
+interface ImpactEntity {
+  id: number;
 
-    
-    name: string;
+  name: string;
 
-    
-    timeline: number[];
+  timeline: number[];
 
-    
-    impacts: number[];
+  impacts: number[];
 
-    
-    createdAt: Date;
+  createdAt: Date;
 
-    
-    updatedAt: Date;
+  updatedAt: Date;
 
-    
-    activityId: number;
-
+  activityId: number;
 }
-
 
 type ImpactActivity = {
-    id: number;
-    name: string;
-    timeline: number[];
-    impacts: number[];
-}
+  id: number;
+  name: string;
+  timeline: number[];
+  impacts: number[];
+};
 
-export type { ImpactEntity, ImpactActivity }
+export type { ImpactEntity, ImpactActivity };

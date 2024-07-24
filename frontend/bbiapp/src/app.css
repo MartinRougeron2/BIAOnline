@@ -1,8 +1,7 @@
-@import '@fontsource/fira-mono';
+@import "@fontsource/fira-mono";
 
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
-

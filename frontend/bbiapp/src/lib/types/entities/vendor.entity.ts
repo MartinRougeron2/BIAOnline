@@ -1,33 +1,21 @@
-
 export interface VendorEntity {
-    
-    id: number;
+  id: number;
 
-    
-    name: string;
+  name: string;
 
-    
-    description: string;
+  description: string;
 
-    
-    contact: string;
+  contact: string;
 
-    
-    status: string;
+  status: string;
 
-    
-    tags: string[];
+  tags: string[];
 
-    
-    defaultRTO: number;
+  defaultRTO: number;
 
-    
-    defaultRPO: number;
+  defaultRPO: number;
 
-    
-    createdAt: Date;
+  createdAt: Date;
 
-    
-    updatedAt: Date;
-
+  updatedAt: Date;
 }
