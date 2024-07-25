@@ -54,4 +54,17 @@ function impactsTimelineToImpactType(
   };
 }
 
-export { numberSecToTime, impactsTimelineToImpactType };
+function stringToHashHexColor(str: string): string {
+  const hashF = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    return hash;
+  };
+  let hash = hashF(str) ** 2 % 0xffffff;
+  return "#" + hash.toString(16);
+}
+
+export { numberSecToTime, impactsTimelineToImpactType, stringToHashHexColor };

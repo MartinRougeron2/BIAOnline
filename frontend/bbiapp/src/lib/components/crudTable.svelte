@@ -24,8 +24,6 @@
   import ViewImpact from "./viewImpact.svelte";
   import type { ImpactType } from "./impactEvaulation.types";
   import type { ImpactEntity } from "$lib/types/entities/impact.entity";
-  import ViewMaxImpact from "./viewMaxImpact.svelte";
-  import { onMount, type ComponentType } from "svelte";
   import { impactsTimelineToImpactType } from "$lib/utils";
 
   export let TableShape: TableShape;

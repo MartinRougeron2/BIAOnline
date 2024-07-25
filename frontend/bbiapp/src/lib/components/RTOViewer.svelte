@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Activity } from "$lib/types/class/entities";
-  import { impactsTimelineToImpactType, numberSecToTime } from "$lib/utils";
+  import { impactsTimelineToImpactType, numberSecToTime, stringToHashHexColor } from "$lib/utils";
 
   import { Bar, Line } from "svelte-chartjs";
   import "chart.js/auto";
@@ -64,19 +64,6 @@
   const randomColor = () => {
     return "#" + Math.floor(Math.random() * 16777215).toString(16);
   };
-
-  function stringToHashHexColor(str: string): string {
-    const hashF = (str: string) => {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-      }
-
-      return hash;
-    };
-    let hash = hashF(str) ** 2 % 0xffffff;
-    return "#" + hash.toString(16);
-  }
 
   // [1, 2, 3] <=> [1, 8, 10] => [1, 1, 1, 2, 3, 3] <=> [1, 2, 3, 8, 10, 11]
   function factoryImpact(

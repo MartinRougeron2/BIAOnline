@@ -21,17 +21,14 @@
     volume: "4500 / 5000",
     frequency: "Daily",
     services: [
-      { id: 1, name: "Severine", RTO: 567888, RPO: 665 },
-      { id: 2, name: "LCL 2", RTO: 56788, RPO: 665 },
-      { id: 3, name: "Mimecast 1", RTO: 58, RPO: 665 },
-      { id: 4, name: "Service 4", RTO: 568, RPO: 665 },
-      { id: 5, name: "Service 5", RTO: 56888, RPO: 665 },
+      { id: 1, name: "Severine", RTO: 567888, RPO: 665, vendor: { id: 1, name: "Vendor 1" }  },
+      { id: 2, name: "LCL 2", RTO: 56788, RPO: 665, vendor: { id: 2, name: "Vendor 2" }  },
+      { id: 3, name: "Mimecast 1", RTO: 58, RPO: 665, vendor: { id: 3, name: "Vendor 3" }  },
+      { id: 4, name: "Service 4", RTO: 568, RPO: 665, vendor: { id: 4, name: "Vendor 4" }  },
+      { id: 5, name: "Service 5", RTO: 56888, RPO: 665, vendor: { id: 5, name: "Vendor 5" }  },
     ],
     teams: [
       { id: 1, name: "Team 1" },
-      { id: 2, name: "Team 2" },
-      { id: 3, name: "Team 3" },
-      { id: 4, name: "Team 4" },
       { id: 5, name: "Team 5" },
     ],
     impacts: [

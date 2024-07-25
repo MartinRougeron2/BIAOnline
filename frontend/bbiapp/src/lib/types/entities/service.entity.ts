@@ -21,6 +21,10 @@ type ServiceActivity = {
   name: string;
   RTO: number;
   RPO: number;
+  vendor: {
+    id: number;
+    name: string;
+  };
 };
 
 export type { ServiceEntity, ServiceActivity };
