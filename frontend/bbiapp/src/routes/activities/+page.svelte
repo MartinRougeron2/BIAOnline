@@ -9,7 +9,7 @@
   import { DotsVerticalOutline, PlusOutline } from "flowbite-svelte-icons";
   import { numberSecToTime } from "$lib/utils";
   import { Activity } from "$lib/types/class/entities";
-  import { color } from "chart.js/helpers";
+  import DetailActivity from "$lib/components/detailActivity.svelte";
 
   let defaultTimeLine: number[] = [3600, 7200, 10800, 86400, 172800, 259200];
 
@@ -398,7 +398,7 @@
     actions: [Actions.delete, Actions.expand],
     endpoint: "/activities",
     titleColumn: "Name",
-    detailComponent: ActivityGet,
+    detailComponent: DetailActivity,
   };
 
   let createModalState: boolean = false;
