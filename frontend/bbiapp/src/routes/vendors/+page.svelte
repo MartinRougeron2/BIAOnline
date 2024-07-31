@@ -113,14 +113,14 @@
         field: (data: Vendor) => data.tags,
       },
       {
-        name: "Default RTO",
+        name: "Default Recovery Time Objective (seconds)",
         color: "blue",
         type: Types.number,
         field: (data: Vendor) => numberSecToTime(data.defaultRTO),
         fieldName: "defaultRTO",
       },
       {
-        name: "Default RPO",
+        name: "Default Recovery Point Objective (seconds)",
         color: "blue",
         type: Types.number,
         field: (data: Vendor) => numberSecToTime(data.defaultRPO),

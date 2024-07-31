@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { Activity } from "$lib/types/class/entities";
-  import { impactsTimelineToImpactType, numberSecToTime, stringToHashHexColor } from "$lib/utils";
+  import {
+    impactsTimelineToImpactType,
+    numberSecToTime,
+    stringToHashHexColor,
+  } from "$lib/utils";
 
   import { Bar, Line } from "svelte-chartjs";
   import "chart.js/auto";
@@ -46,7 +50,7 @@
     return impactsTimelineToImpactType(impact, maxImpact(activity.impacts));
   });
 
-  let heightCanvas: number = 600;
+  export let heightCanvas: number;
   let noname: boolean = false;
 
   const borderColor = (color: string, opacity: number = 1) => {
@@ -209,7 +213,6 @@
   };
 
   $: options = {
-    responsive: true,
     animation: false,
     scales: {
       y: {
@@ -278,6 +281,11 @@
   console.log(options);
 </script>
 
-<div class="flex flex-col impact-view" style="height: {heightCanvas}px">
-  <Line {data} {options} id="impact-view" />
+<div class="flex flex-col impact-view items-center">
+  <Line
+    {data}
+    {options}
+    id="impact-view"
+    style="height: {heightCanvas}px; width: 80%"
+  />
 </div>

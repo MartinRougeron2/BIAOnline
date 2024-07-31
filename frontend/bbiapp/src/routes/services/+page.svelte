@@ -155,16 +155,18 @@
         field: (data: Service) => data.location,
       },
       {
-        name: "rto",
+        name: "Recovery Time Objective (seconds)",
         color: "blue",
         type: Types.number,
         field: (data: Service) => numberSecToTime(data.RTO),
+        fieldName: "RTO",
       },
       {
-        name: "rpo",
+        name: "Recovery Point Objective (seconds)",
         color: "blue",
         type: Types.number,
         field: (data: Service) => numberSecToTime(data.RPO),
+        fieldName: "RPO",
       },
       {
         name: "Vendor Name",

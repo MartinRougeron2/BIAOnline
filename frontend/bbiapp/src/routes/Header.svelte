@@ -1,5 +1,4 @@
 <script>
-  import { page } from "$app/stores";
   import { Input, Label, Helper } from "flowbite-svelte";
   import logo from "$lib/images/BBIA.png";
   import { Button } from "flowbite-svelte";

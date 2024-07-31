@@ -28,15 +28,8 @@
         chartArea.top,
       );
       // yellowish to red
-      gradient.addColorStop(0, "#FFFFFF"); // White
       gradient.addColorStop(0.1, "#FFFFCC"); // Light Yellow
-      gradient.addColorStop(0.2, "#FFFF99"); // Pale Yellow
-      gradient.addColorStop(0.3, "#FFFF00"); // Yellow
-      gradient.addColorStop(0.4, "#FFCC00"); // Light Orange
       gradient.addColorStop(0.5, "#FF9900"); // Orange
-      gradient.addColorStop(0.6, "#FF6600"); // Deep Orange
-      gradient.addColorStop(0.7, "#FF3300"); // Light Red
-      gradient.addColorStop(0.8, "#FF0000"); // Red
       gradient.addColorStop(0.9, "#CC0000"); // Extreme Red
     }
 
@@ -52,7 +45,6 @@
         interaction: {
           mode: "y",
         },
-        borderColor: "rgb(30, 30, 30, 0.4)",
         fill: true,
         backgroundColor: function (context: any) {
           const chart = context.chart;

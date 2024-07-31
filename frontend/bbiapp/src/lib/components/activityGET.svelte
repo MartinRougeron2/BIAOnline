@@ -2,6 +2,7 @@
   import ViewMaxImpact from "$lib/components/viewMaxImpact.svelte";
   import EditImpacts from "$lib/components/editImpacts.svelte";
   import RtoViewer from "$lib/components/RTOViewer.svelte";
+  import { createEventDispatcher } from "svelte";
 
   import {
     Range,
@@ -12,13 +13,10 @@
     Textarea,
     MultiSelect,
     Badge,
+    Toggle,
   } from "flowbite-svelte";
   import { AngleDownOutline, AngleUpOutline } from "flowbite-svelte-icons";
-  import {
-    impactsTimelineToImpactType,
-    numberSecToTime,
-    stringToHashHexColor,
-  } from "$lib/utils";
+  import { impactsTimelineToImpactType, numberSecToTime } from "$lib/utils";
   import { Activity } from "$lib/types/class/entities";
   import ViewImpact from "$lib/components/viewImpact.svelte";
   import type { TeamActivity } from "$lib/types/entities/team.entity";
@@ -26,16 +24,19 @@
 
   export let item: Activity;
 
-  let modalStateGeneral: boolean = false;
   let modalStateImpacts: boolean = false;
-  let modalStateParts: boolean = false;
-  let modalStateRTO: boolean = false;
+  let editRTO: boolean = false;
+
+  const dispatch = createEventDispatcher();
+
+  const save = () => {
+    dispatch("save", item);
+  };
 
   $: dynamicImpacts = item.impacts.map((impact) =>
     impactsTimelineToImpactType(impact, 5),
   );
 
-  console.log(item);
   $: generalShow = false;
   $: underlyingShow = false;
   $: impactShow = false;
@@ -123,7 +124,7 @@
   }
 </script>
 
-<main>
+<div class="activity-container">
   <div class="mt-4">
     <Label>Name</Label>
     <Input bind:value={item.name} />
@@ -314,12 +315,13 @@
         </div>
       </div>
       {#if impactShow}
-      <div class="flex justify-end col-start-2 mr-4">
-        <Button
-        color="blue"
-        on:click={() => (modalStateImpacts = !modalStateImpacts)}>Edit</Button
-        >
-      </div>
+        <div class="flex justify-end col-start-2 mr-4">
+          <Button
+            color="blue"
+            on:click={() => (modalStateImpacts = !modalStateImpacts)}
+            >Edit</Button
+          >
+        </div>
         <div class="grid grid-cols-4 gap-4 mt-4 impacts">
           {#each dynamicImpacts as impact}
             <ViewImpact {impact} heightCanvas={200} />
@@ -358,6 +360,10 @@
         </div>
         {#if RTOhow}
           <div class="mt-4">
+            <div class="flex justify-end col-start-2 mr-4">
+              <Toggle bind:checked={editRTO} color="blue" />
+              Edit RTO
+            </div>
             <span class="text-lg font-bold"
               >RTO: {numberSecToTime(item.RTO)}</span
             >
@@ -368,6 +374,7 @@
               )}
               bind:value={item.RTO}
               step={3600}
+              disabled={!editRTO}
             />
             <RtoViewer bind:activity={item} />
           </div>
@@ -375,7 +382,12 @@
       </div>
     </div>
   </div>
-</main>
+  <div>
+    <div class="flex justify-end mt-4">
+      <Button color="green" size="lg" on:click={() => save()}>Save</Button>
+    </div>
+  </div>
+</div>
 
 <style>
   .max-impact {
@@ -383,8 +395,9 @@
     margin-left: auto;
     margin-right: auto;
   }
-  main {
-    height: 100%;
-    width: 80vw;
+
+  .activity-container {
+    padding: 1rem;
+    padding-left: 0;
   }
 </style>

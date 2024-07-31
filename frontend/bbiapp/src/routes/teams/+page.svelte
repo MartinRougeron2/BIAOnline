@@ -73,6 +73,7 @@
         color: "blue",
         type: Types.text,
         field: (data: Team) => data.id,
+        formVisible: false,
       },
       {
         name: "Name",
@@ -115,6 +116,7 @@
         color: "blue",
         type: Types.date,
         field: (data: Team) => data.createdAt.toLocaleDateString(),
+        formVisible: false,
       },
     ],
     actions: [Actions.edit, Actions.delete],
