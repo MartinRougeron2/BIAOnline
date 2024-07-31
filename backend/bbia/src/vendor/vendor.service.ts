@@ -11,7 +11,7 @@ export class VendorService {
   create(createVendorDto: CreateVendorDto) {
     return this.prisma.vendor.create({
       data: createVendorDto,
-    }); 
+    });
   }
 
   findAll() {

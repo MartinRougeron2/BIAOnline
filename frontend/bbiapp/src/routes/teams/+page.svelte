@@ -8,63 +8,7 @@
   import { PlusOutline } from "flowbite-svelte-icons";
   import { Team } from "$lib/types/class/entities";
 
-  let mockData: Team[] = [
-    new Team({
-      id: 1,
-      name: "Team 1",
-      description: "Team 1 description",
-      owner: "Owner 1",
-      status: "Active",
-      membersnumber: 5,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }),
-    new Team({
-      id: 2,
-      name: "Team 2",
-      description: "Team 2 description",
-      owner: "Owner 2",
-      status: "Active",
-      membersnumber: 5,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }),
-    new Team({
-      id: 3,
-      name: "Team 3",
-      description: "Team 3 description",
-      owner: "Owner 3",
-      status: "Active",
-      membersnumber: 5,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }),
-    new Team({
-      id: 4,
-      name: "Team 4",
-      description: "Team 4 description",
-      owner: "Owner 4",
-      status: "Active",
-      membersnumber: 5,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }),
-    new Team({
-      id: 5,
-      name: "Team 5",
-      description: "Team 5 description",
-      owner: "Owner 5",
-      status: "Active",
-      membersnumber: 5,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }),
-  ];
+  export let data: {error: string, data: Team[]} = {error: "", data: []};
 
   let tableShape: TableShape = {
     columns: [
@@ -162,7 +106,11 @@
       </Button>
     </div>
 
-    <CrudTable TableShape={tableShape} TableData={mockData} bind:checkItems />
+      {#if data.data && data.data.length > 0}
+      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems />
+      {:else}
+      <p>No data</p>
+      {/if}
 
     <ModalColumns
       columns={tableShape.columns.slice(1)}

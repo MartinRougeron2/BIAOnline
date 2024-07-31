@@ -52,8 +52,10 @@ class Team implements TeamEntity {
     this.status = team.status;
     this.membersnumber = team.membersnumber;
     this.tags = team.tags;
-    this.createdAt = team.createdAt;
-    this.updatedAt = team.updatedAt;
+    const ISOC = Date.parse(team.createdAt);
+    this.createdAt = new Date(ISOC);
+    const ISOU = Date.parse(team.updatedAt);
+    this.updatedAt = new Date(ISOU);
   }
 }
 

@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminpanelService } from './adminpanel.service';
 import { CreateAdminpanelDto } from './dto/create-adminpanel.dto';
 import { UpdateAdminpanelDto } from './dto/update-adminpanel.dto';
 
-@Controller('adminpanel')
+@Controller('api/v1/adminpanel')
 export class AdminpanelController {
   constructor(private readonly adminpanelService: AdminpanelService) {}
 
@@ -23,7 +31,10 @@ export class AdminpanelController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminpanelDto: UpdateAdminpanelDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAdminpanelDto: UpdateAdminpanelDto,
+  ) {
     return this.adminpanelService.update(+id, updateAdminpanelDto);
   }
 

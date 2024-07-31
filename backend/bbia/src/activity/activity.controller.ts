@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
@@ -7,19 +15,21 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 import { Activity } from './entities/activity.entity';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('activities')
+@Controller('api/v1/activities')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Post()
   @ApiResponse({ status: 201, type: Activity })
-  create(@Body() createActivityDto: CreateActivityDto) : Promise<Activity> {
+  create(@Body() createActivityDto: CreateActivityDto): Promise<Activity> {
     return this.activityService.create(createActivityDto);
   }
 
   @Post('complete')
   @ApiResponse({ status: 201, type: Activity })
-  complete(@Body() completeActivityDto: CompleteActivityDto) : Promise<Activity> {
+  complete(
+    @Body() completeActivityDto: CompleteActivityDto,
+  ): Promise<Activity> {
     return this.activityService.complete(completeActivityDto);
   }
 
@@ -37,7 +47,10 @@ export class ActivityController {
 
   @Patch(':id')
   @ApiResponse({ status: 200, type: Activity })
-  update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateActivityDto: UpdateActivityDto,
+  ) {
     return this.activityService.update(+id, updateActivityDto);
   }
 

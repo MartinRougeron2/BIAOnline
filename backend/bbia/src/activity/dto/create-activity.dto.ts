@@ -1,41 +1,39 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateActivityDto {
-    @ApiProperty()
-    name: string;
-    
-    @ApiProperty()
-    description: string;
-    
-    @ApiProperty()
-    criticality: string;
-    
-    @ApiProperty()
-    owner: string;
-    
-    @ApiProperty()
-    validation: string;
-    
-    @ApiProperty()
-    volume: string;
-    
-    @ApiProperty()
-    frequency: string;
-    
-    @ApiProperty()
-    location: string;
-    
-    @ApiProperty()
-    status: string;
-    
-    @ApiProperty()
-    servicesId: string[];
-    
-    @ApiProperty()
-    teamsId: string[];
-    
-    @ApiProperty()
-    tags: string[];
-    
-}
+  @ApiProperty()
+  name: string;
 
+  @ApiProperty()
+  description: string;
+
+  @ApiProperty()
+  criticality: string;
+
+  @ApiProperty()
+  owner: string;
+
+  @ApiProperty()
+  validation: string;
+
+  @ApiProperty()
+  volume: string;
+
+  @ApiProperty()
+  frequency: string;
+
+  @ApiProperty()
+  location: string;
+
+  @ApiProperty()
+  status: string;
+
+  @ApiProperty()
+  servicesId: string[];
+
+  @ApiProperty()
+  teamsId: string[];
+
+  @ApiProperty()
+  tags: string[];
+}

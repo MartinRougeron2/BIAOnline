@@ -1,34 +1,33 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateServiceDto {
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    description: string;
+  @ApiProperty()
+  description: string;
 
-    @ApiProperty()
-    owner: string;
+  @ApiProperty()
+  owner: string;
 
-    @ApiProperty()
-    status: string;
+  @ApiProperty()
+  status: string;
 
-    @ApiProperty()
-    activitiesSpecificId: string[];
+  @ApiProperty()
+  activitiesSpecificId: string[];
 
-    @ApiProperty()
-    location: string;
+  @ApiProperty()
+  location: string;
 
-    @ApiProperty()
-    RTO: number;
+  @ApiProperty()
+  RTO: number;
 
-    @ApiProperty()
-    RPO: number;
+  @ApiProperty()
+  RPO: number;
 
-    @ApiProperty()
-    vendorId: number;
+  @ApiProperty()
+  vendorId: number;
 
-    @ApiProperty()
-    tags: string[];
-
+  @ApiProperty()
+  tags: string[];
 }

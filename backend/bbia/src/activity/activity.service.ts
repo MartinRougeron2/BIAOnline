@@ -31,8 +31,8 @@ export class ActivityService {
         frequency: createActivityDto.frequency,
         location: createActivityDto.location,
         status: createActivityDto.status,
-        tags: createActivityDto.tags
-      }
+        tags: createActivityDto.tags,
+      },
     });
   }
 

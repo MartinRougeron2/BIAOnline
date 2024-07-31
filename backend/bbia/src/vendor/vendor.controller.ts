@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { VendorService } from './vendor.service';
 import { CreateVendorDto } from './dto/create-vendor.dto';
 import { UpdateVendorDto } from './dto/update-vendor.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import { Vendor } from './entities/vendor.entity';
 
-@Controller('vendors')
+@Controller('api/v1/vendors')
 export class VendorController {
   constructor(private readonly vendorService: VendorService) {}
 

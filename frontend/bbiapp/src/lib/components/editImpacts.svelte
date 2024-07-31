@@ -7,9 +7,9 @@
 
   const dispatch = createEventDispatcher();
 
-  export let impacts: ImpactType[];
+  export let impacts: ImpactType[] = [];
 
-  export let activityImpacts: ImpactActivity[];
+  export let activityImpacts: ImpactActivity[] = [];
 
   export let modalState: boolean;
 
@@ -41,10 +41,11 @@
       );
     }
   }
+  
 </script>
 
 <main>
-  <Modal title="Impact Evaluation" bind:open={modalState} size="xl">
+  <Modal title="Impact Evaluation" bind:open={modalState} size="md">
     <!-- 2 columns, one to choose impact, second one with impact-->
     <div>
       <div class="flex justify-between">

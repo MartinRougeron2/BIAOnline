@@ -13,9 +13,9 @@ interface TeamEntity {
 
   tags: string[];
 
-  createdAt: Date;
+  createdAt: string;
 
-  updatedAt: Date;
+  updatedAt: string;
 }
 
 type TeamActivity = {

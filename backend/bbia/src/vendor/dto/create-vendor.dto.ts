@@ -1,25 +1,24 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVendorDto {
-    @ApiProperty()
-    name: string;  
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    description: string;
+  @ApiProperty()
+  description: string;
 
-    @ApiProperty()
-    contact: string;
+  @ApiProperty()
+  contact: string;
 
-    @ApiProperty()
-    status: string;
+  @ApiProperty()
+  status: string;
 
-    @ApiProperty()
-    tags: string[];
+  @ApiProperty()
+  tags: string[];
 
-    @ApiProperty()
-    defaultRTO: number;
+  @ApiProperty()
+  defaultRTO: number;
 
-    @ApiProperty()
-    defaultRPO: number;
-
+  @ApiProperty()
+  defaultRPO: number;
 }

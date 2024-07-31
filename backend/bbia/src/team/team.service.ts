@@ -13,8 +13,7 @@ export class TeamService {
 
     return this.prisma.team.create({
       data: {
-        users: 
-        {
+        users: {
           connect: usersIdNumber.map((id) => ({ id })),
         },
         name: createTeamDto.name,

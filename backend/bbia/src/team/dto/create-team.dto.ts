@@ -1,24 +1,24 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTeamDto {
-    @ApiProperty()
-    name: string;
-    
-    @ApiProperty()
-    description: string;
-    
-    @ApiProperty()
-    owner: string;
-    
-    @ApiProperty()
-    usersId: string[];
-    
-    @ApiProperty()
-    status: string;
-    
-    @ApiProperty()
-    membersnumber: number;
-    
-    @ApiProperty()
-    tags: string[];
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  description: string;
+
+  @ApiProperty()
+  owner: string;
+
+  @ApiProperty()
+  usersId: string[];
+
+  @ApiProperty()
+  status: string;
+
+  @ApiProperty()
+  membersnumber: number;
+
+  @ApiProperty()
+  tags: string[];
 }

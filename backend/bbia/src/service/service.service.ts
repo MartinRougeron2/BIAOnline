@@ -9,7 +9,8 @@ export class ServiceService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createServiceDto: CreateServiceDto) {
-    const activitiesSpecificIdNumber: number[] = createServiceDto.activitiesSpecificId.map(Number);
+    const activitiesSpecificIdNumber: number[] =
+      createServiceDto.activitiesSpecificId.map(Number);
     return this.prisma.service.create({
       data: {
         Vendor: {
@@ -25,8 +26,8 @@ export class ServiceService {
         location: createServiceDto.location,
         RTO: createServiceDto.RTO,
         RPO: createServiceDto.RPO,
-        tags: createServiceDto.tags
-      }
+        tags: createServiceDto.tags,
+      },
     });
   }
 
@@ -43,7 +44,8 @@ export class ServiceService {
   }
 
   update(id: number, updateServiceDto: UpdateServiceDto) {
-    const activitiesSpecificIdNumber: number[] = updateServiceDto.activitiesSpecificId.map(Number);
+    const activitiesSpecificIdNumber: number[] =
+      updateServiceDto.activitiesSpecificId.map(Number);
     return this.prisma.service.update({
       where: {
         id: id,
@@ -62,7 +64,7 @@ export class ServiceService {
         location: updateServiceDto.location,
         RTO: updateServiceDto.RTO,
         RPO: updateServiceDto.RPO,
-        tags: updateServiceDto.tags
+        tags: updateServiceDto.tags,
       },
     });
   }

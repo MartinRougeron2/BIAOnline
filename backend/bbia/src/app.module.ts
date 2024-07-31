@@ -11,9 +11,18 @@ import { ServiceModule } from './service/service.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 
-
 @Module({
-  imports: [DashboardModule, ImpactModule, TeamModule, ActivityModule, AdminpanelModule, VendorModule, ServiceModule, AuthModule, PrismaModule],
+  imports: [
+    DashboardModule,
+    ImpactModule,
+    TeamModule,
+    ActivityModule,
+    AdminpanelModule,
+    VendorModule,
+    ServiceModule,
+    AuthModule,
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

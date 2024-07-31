@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ImpactService } from './impact.service';
 import { CreateImpactDto } from './dto/create-impact.dto';
 import { UpdateImpactDto } from './dto/update-impact.dto';
 import { Impact } from './entities/impact.entity';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('impacts')
+@Controller('api/v1/impacts')
 export class ImpactController {
   constructor(private readonly impactService: ImpactService) {}
 
