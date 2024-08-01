@@ -60,4 +60,4 @@ const notificationStore = {
 
 // unsubscribe();
 
-export { notificationStore, INotificationStore };
+export { notificationStore, type INotificationStore };

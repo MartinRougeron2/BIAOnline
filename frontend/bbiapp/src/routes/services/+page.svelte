@@ -9,108 +9,7 @@
   import { numberSecToTime } from "$lib/utils";
   import { Service } from "$lib/types/class/entities";
 
-  let mockData: Service[] = [
-    new Service({
-      id: 1,
-      name: "Service 1",
-      description: "Service 1 description",
-      owner: "Owner 1",
-      status: "Active",
-      location: "Location 1",
-      RTO: 5678889999,
-      RPO: 665,
-      vendorId: 1,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      vendor: {
-        id: 1,
-        name: "Vendor 1",
-        defaultRPO: 560,
-        defaultRTO: 560,
-      },
-    }),
-    new Service({
-      id: 2,
-      name: "Service 2",
-      description: "Service 2 description",
-      owner: "Owner 2",
-      status: "Active",
-      location: "Location 2",
-      RTO: 55556,
-      RPO: 5,
-      vendorId: 2,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      vendor: {
-        id: 2,
-        name: "Vendor 2",
-        defaultRPO: 560,
-        defaultRTO: 560,
-      },
-    }),
-    new Service({
-      id: 3,
-      name: "Service 3",
-      description: "Service 3 description",
-      owner: "Owner 3",
-      status: "Active",
-      location: "Location 3",
-      RTO: 345,
-      RPO: 5465,
-      vendorId: 3,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      vendor: {
-        id: 3,
-        name: "Vendor 3",
-        defaultRPO: 560,
-        defaultRTO: 560,
-      },
-    }),
-    new Service({
-      id: 4,
-      name: "Service 4",
-      description: "Service 4 description",
-      owner: "Owner 4",
-      status: "Active",
-      location: "Location 4",
-      RTO: 236785,
-      RPO: 234567875,
-      vendorId: 4,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      vendor: {
-        id: 4,
-        name: "Vendor 4",
-        defaultRPO: 560,
-        defaultRTO: 560,
-      },
-    }),
-    new Service({
-      id: 5,
-      name: "Service 5",
-      description: "Service 5 description",
-      owner: "Owner 5",
-      status: "Active",
-      location: "Location 5",
-      RTO: 5678905,
-      RPO: 4565,
-      vendorId: 5,
-      tags: ["tag1", "tag2"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      vendor: {
-        id: 5,
-        name: "Vendor 5",
-        defaultRPO: 560,
-        defaultRTO: 560,
-      },
-    }),
-  ];
+  export let data: {error: string, data: Service[]} = {error: "", data: []};
 
   let tableShape: TableShape = {
     columns: [
@@ -192,7 +91,7 @@
         name: "Created At",
         color: "blue",
         type: Types.date,
-        field: (data: Service) => data.createdAt.toLocaleDateString(),
+        field: (data: Service) => data.createdAtDate.toLocaleDateString(),
         formVisible: false,
         tableVisible: false,
       },
@@ -215,8 +114,8 @@
     RPO: 0,
     vendorId: 0,
     tags: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: (new Date()).toLocaleDateString(),
+    updatedAt: (new Date()).toLocaleDateString(),
     vendor: {
       id: 0,
       name: "",
@@ -249,7 +148,11 @@
       </Button>
     </div>
 
-    <CrudTable TableShape={tableShape} TableData={mockData} bind:checkItems />
+    {#if data.data && data.data.length > 0}
+      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems />
+    {:else}
+      <p>No data</p>
+    {/if}
 
     <ModalColumns
       columns={tableShape.columns}

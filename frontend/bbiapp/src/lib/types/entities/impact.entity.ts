@@ -7,9 +7,9 @@ interface ImpactEntity {
 
   impacts: number[];
 
-  createdAt: Date;
+  createdAt: string;
 
-  updatedAt: Date;
+  updatedAt: string;
 
   activityId: number;
 }

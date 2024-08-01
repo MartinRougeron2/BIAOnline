@@ -52,7 +52,13 @@ export class ActivityService {
   }
 
   findAll() {
-    return this.prisma.activity.findMany();
+    return this.prisma.activity.findMany({
+      include: {
+        services: true,
+        teams: true,
+        impacts: true,
+      },
+    });
   }
 
   findOne(id: number) {

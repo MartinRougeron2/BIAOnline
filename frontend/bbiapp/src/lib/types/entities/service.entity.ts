@@ -11,8 +11,8 @@ interface ServiceEntity {
   RPO: number;
   vendorId: number;
   tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   vendor: Partial<VendorEntity>;
 }
 

@@ -59,7 +59,7 @@
         name: "Created At",
         color: "blue",
         type: Types.date,
-        field: (data: Team) => data.createdAt.toLocaleDateString(),
+        field: (data: Team) => data.createdAtDate.toLocaleDateString(),
         formVisible: false,
       },
     ],
@@ -78,8 +78,8 @@
     status: "",
     membersnumber: 0,
     tags: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: (new Date()).toLocaleDateString(),
+    updatedAt: (new Date()).toLocaleDateString(),
   });
 
   let checkItems: number[] = [];

@@ -53,7 +53,7 @@ model Service {
   RTO           Int
   RPO           Int
   vendorId      Int
-  Vendor        Vendor @relation(fields: [vendorId], references: [id])
+  vendor        Vendor @relation(fields: [vendorId], references: [id])
   tags          String[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())

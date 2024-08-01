@@ -15,7 +15,7 @@ export interface VendorEntity {
 
   defaultRPO: number;
 
-  createdAt: Date;
+  createdAt: string;
 
-  updatedAt: Date;
+  updatedAt: string;
 }

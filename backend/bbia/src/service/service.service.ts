@@ -13,7 +13,7 @@ export class ServiceService {
       createServiceDto.activitiesSpecificId.map(Number);
     return this.prisma.service.create({
       data: {
-        Vendor: {
+        vendor: {
           connect: { id: createServiceDto.vendorId },
         },
         activityspecific: {
@@ -32,7 +32,12 @@ export class ServiceService {
   }
 
   findAll() {
-    return this.prisma.service.findMany();
+    return this.prisma.service.findMany({
+      include: {
+        vendor: true,
+        activityspecific: true,
+      },
+    });
   }
 
   findOne(id: number) {
@@ -51,7 +56,7 @@ export class ServiceService {
         id: id,
       },
       data: {
-        Vendor: {
+        vendor: {
           connect: { id: updateServiceDto.vendorId },
         },
         activityspecific: {

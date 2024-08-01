@@ -29,10 +29,10 @@ async function fetchData(url: string) : Promise<void | IResponse> {
             }
         }
         return { status: response.status, json: await response.json() };
-    } catch (error) {
+    } catch (error: any) {
         console.error(error.message)
         notificationStore.show(error.message, 'error');
     }
 }
 
-export { fetchData, IResponse };
+export { fetchData, type IResponse };

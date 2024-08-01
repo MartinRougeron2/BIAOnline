@@ -7,7 +7,13 @@ import type {
 import type { TeamActivity, TeamEntity } from "../entities/team.entity";
 import type { VendorEntity } from "../entities/vendor.entity";
 
-class Vendor implements VendorEntity {
+function stringToDate(dateString: string): Date {
+  // datastring is in YYYY-MM-DDTHH:MM:SSZ format
+  const date = new Date(dateString);
+  return date;
+}
+
+class Vendor implements Partial<VendorEntity> {
   id: number;
   name: string;
   description: string;
@@ -16,8 +22,10 @@ class Vendor implements VendorEntity {
   tags: string[];
   defaultRTO: number;
   defaultRPO: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAtDate: Date;
+  createdAt: string;
+  updatedAtDate: Date;
+  updatedAt: string;
 
   constructor(vendor: VendorEntity) {
     this.id = vendor.id;
@@ -29,7 +37,9 @@ class Vendor implements VendorEntity {
     this.defaultRTO = vendor.defaultRTO;
     this.defaultRPO = vendor.defaultRPO;
     this.createdAt = vendor.createdAt;
+    this.createdAtDate = stringToDate(vendor.createdAt);
     this.updatedAt = vendor.updatedAt;
+    this.updatedAtDate = stringToDate(vendor.updatedAt);
   }
 }
 
@@ -41,8 +51,10 @@ class Team implements TeamEntity {
   status: string;
   membersnumber: number;
   tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAtDate: Date;
+  createdAt: string;
+  updatedAtDate: Date;
+  updatedAt: string;
 
   constructor(team: TeamEntity) {
     this.id = team.id;
@@ -52,20 +64,22 @@ class Team implements TeamEntity {
     this.status = team.status;
     this.membersnumber = team.membersnumber;
     this.tags = team.tags;
-    const ISOC = Date.parse(team.createdAt);
-    this.createdAt = new Date(ISOC);
-    const ISOU = Date.parse(team.updatedAt);
-    this.updatedAt = new Date(ISOU);
+    this.createdAt = team.createdAt;
+    this.createdAtDate = stringToDate(team.createdAt);
+    this.updatedAt = team.updatedAt;
+    this.updatedAtDate = stringToDate(team.updatedAt);
   }
 }
 
 class Impact implements ImpactEntity {
   id: number;
   name: string;
-  updatedAt: Date;
+  updatedAtDate: Date;
+  updatedAt: string;
   timeline: number[];
   impacts: number[];
-  createdAt: Date;
+  createdAtDate: Date;
+  createdAt: string;
   activityId: number;
 
   constructor(impact: ImpactEntity) {
@@ -74,7 +88,9 @@ class Impact implements ImpactEntity {
     this.timeline = impact.timeline;
     this.impacts = impact.impacts;
     this.createdAt = impact.createdAt;
+    this.createdAtDate = stringToDate(impact.createdAt);
     this.updatedAt = impact.updatedAt;
+    this.updatedAtDate = stringToDate(impact.updatedAt);
     this.activityId = impact.activityId;
   }
 }
@@ -91,8 +107,10 @@ class Service implements ServiceEntity {
   vendorId: number;
   vendorIdString: string;
   tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAtDate: Date;
+  createdAt: string;
+  updatedAtDate: Date;
+  updatedAt: string;
   vendor: Partial<VendorEntity>;
 
   constructor(service: ServiceEntity) {
@@ -108,7 +126,9 @@ class Service implements ServiceEntity {
     this.vendorIdString = this.vendorId.toString();
     this.tags = service.tags;
     this.createdAt = service.createdAt;
+    this.createdAtDate = stringToDate(service.createdAt);
     this.updatedAt = service.updatedAt;
+    this.updatedAtDate = stringToDate(service.updatedAt);
     this.vendor = {
       id: service.vendor.id ?? 0,
       name: service.vendor.name ?? "",
@@ -124,8 +144,10 @@ class Activity implements ActivityEntity {
   description: string;
   status: string;
   tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAtDate: Date;
+  createdAt: string;
+  updatedAtDate: Date;
+  updatedAt: string;
   impacts: ImpactActivity[];
   services: ServiceActivity[];
   teams: TeamActivity[];
@@ -145,8 +167,12 @@ class Activity implements ActivityEntity {
     this.status = activity.status;
     this.tags = activity.tags;
     this.createdAt = activity.createdAt;
+    this.createdAtDate = stringToDate(activity.createdAt);
     this.updatedAt = activity.updatedAt;
+    this.updatedAtDate = stringToDate(activity.updatedAt);
+
     if (
+      activity.impacts[0] &&
       activity.impacts[0].id &&
       activity.impacts[0].name &&
       activity.impacts[0].timeline &&
@@ -164,6 +190,7 @@ class Activity implements ActivityEntity {
       this.impacts = [];
     }
     if (
+      activity.services[0] &&
       activity.services[0].id &&
       activity.services[0].name &&
       activity.services[0].RTO &&
@@ -175,12 +202,16 @@ class Activity implements ActivityEntity {
           name: service.name,
           RTO: service.RTO,
           RPO: service.RPO,
+          vendor: {
+            id: service.vendor.id,
+            name: service.vendor.name,
+          },
         };
       });
     } else {
       this.services = [];
     }
-    if (activity.teams[0].id && activity.teams[0].name) {
+    if (activity.teams[0] && activity.teams[0].id && activity.teams[0].name) {
       this.teams = activity.teams.map((team) => {
         return {
           id: team.id,

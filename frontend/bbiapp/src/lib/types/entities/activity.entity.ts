@@ -16,8 +16,8 @@ export interface ActivityEntity {
   RTO: number;
   RPO: number;
   tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   services: ServiceActivity[];
   teams: TeamActivity[];
   impacts: ImpactActivity[];
