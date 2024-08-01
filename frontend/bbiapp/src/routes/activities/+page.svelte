@@ -10,6 +10,8 @@
   import { numberSecToTime } from "$lib/utils";
   import { Activity } from "$lib/types/class/entities";
   import DetailActivity from "$lib/components/detailActivity.svelte";
+  import type { ActivityEntity } from "$lib/types/entities/activity.entity";
+    import { notificationStore } from "$lib/stores";
 
   let defaultTimeLine: number[] = [3600, 7200, 10800, 86400, 172800, 259200];
 
@@ -150,7 +152,7 @@
       },
     ],
     actions: [Actions.delete, Actions.expand],
-    endpoint: "/activities",
+    endpoint: "activities",
     titleColumn: "Name",
     detailComponent: DetailActivity,
   };
@@ -252,6 +254,14 @@
       },
     ],
   });
+
+  function updateData(event: CustomEvent) {
+    const newActivity: ActivityEntity = event.detail.data;
+    notificationStore.show("Activity: " + newActivity.name + " updated successfully", "success");
+    const id: number = event.detail.id;
+    const index: number = data.data.findIndex((activity) => activity.id === id);
+    data.data[index] = new Activity(newActivity);
+  }
 </script>
 
 <main>
@@ -281,7 +291,7 @@
     </div>
 
     {#if data.data && data.data.length > 0}
-      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems />
+      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems on:save={updateData}/>
     {:else}
       <p>No data</p>
     {/if}
@@ -291,6 +301,8 @@
       dataToEdit={createData}
       title="Create New Service"
       modalState={createModalState}
+      id={createData.id}
+      endpoint={tableShape.endpoint}
     />
   </div>
 </main>

@@ -26,6 +26,10 @@
   import type { ImpactEntity } from "$lib/types/entities/impact.entity";
   import { impactsTimelineToImpactType } from "$lib/utils";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
   export let TableShape: TableShape;
   export let TableData: Data[];
   export let checkItems: number[];
@@ -81,6 +85,10 @@
   }).flat();
 
   $: maxImpactSize = Math.max(...maxImpacts);
+
+  function dataSaved(data: any, id: number) {
+    dispatch("save", { data, id });
+  }
 </script>
 
 <div class="CRUDTable">
@@ -252,7 +260,10 @@
       columns={TableShape.columns}
       dataToEdit={dataEdit}
       title="Edit {dataEditTitle}"
+      id={dataEdit.id}
+      endpoint={TableShape.endpoint}
       bind:modalState
+      on:save={(response) => {dataSaved(response.detail, dataEdit.id)}}
     />
   {/if}
   {#if state === Actions.delete}

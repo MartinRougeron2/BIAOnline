@@ -7,6 +7,8 @@
   import { Button, Input } from "flowbite-svelte";
   import { PlusOutline } from "flowbite-svelte-icons";
   import { Team } from "$lib/types/class/entities";
+    import type { TeamEntity } from "$lib/types/entities/team.entity";
+    import { notificationStore } from "$lib/stores";
 
   export let data: {error: string, data: Team[]} = {error: "", data: []};
 
@@ -64,7 +66,7 @@
       },
     ],
     actions: [Actions.edit, Actions.delete],
-    endpoint: "/teams",
+    endpoint: "teams",
     titleColumn: "Name",
   };
 
@@ -83,6 +85,14 @@
   });
 
   let checkItems: number[] = [];
+
+  function updateData(event: CustomEvent) {
+    const newTeam: TeamEntity = event.detail.data;
+    notificationStore.show("Team: " + newTeam.name + " updated successfully", "success");
+    const id: number = event.detail.id;
+    const index: number = data.data.findIndex((team) => team.id === id);
+    data.data[index] = new Team(newTeam);
+  }
 </script>
 
 <main>
@@ -107,7 +117,7 @@
     </div>
 
       {#if data.data && data.data.length > 0}
-      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems />
+      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems on:save={updateData} />
       {:else}
       <p>No data</p>
       {/if}
@@ -117,6 +127,8 @@
       dataToEdit={createData}
       title="Create New Team"
       modalState={createModalState}
+      id={createData.id}
+      endpoint={tableShape.endpoint}
     />
   </div>
 </main>

@@ -31,7 +31,16 @@ export class VendorService {
       where: {
         id: id,
       },
-      data: updateVendorDto,
+      data: {
+        name: updateVendorDto.name,
+        description: updateVendorDto.description,
+        contact: updateVendorDto.contact,
+        status: updateVendorDto.status,
+        tags: updateVendorDto.tags,
+        defaultRTO: updateVendorDto.defaultRTO,
+        defaultRPO: updateVendorDto.defaultRPO,
+        updatedAt: new Date(),
+      },
     });
   }
 

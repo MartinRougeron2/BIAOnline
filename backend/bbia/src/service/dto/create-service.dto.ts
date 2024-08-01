@@ -14,7 +14,7 @@ export class CreateServiceDto {
   status: string;
 
   @ApiProperty()
-  activitiesSpecificId: string[];
+  activitiesSpecificId: string;
 
   @ApiProperty()
   location: string;
@@ -29,5 +29,5 @@ export class CreateServiceDto {
   vendorId: number;
 
   @ApiProperty()
-  tags: string[];
+  tags: string;
 }

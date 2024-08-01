@@ -10,7 +10,7 @@ export class ServiceService {
 
   create(createServiceDto: CreateServiceDto) {
     const activitiesSpecificIdNumber: number[] =
-      createServiceDto.activitiesSpecificId.map(Number);
+      createServiceDto.activitiesSpecificId.split(',').map(Number);
     return this.prisma.service.create({
       data: {
         vendor: {
@@ -26,7 +26,11 @@ export class ServiceService {
         location: createServiceDto.location,
         RTO: createServiceDto.RTO,
         RPO: createServiceDto.RPO,
-        tags: createServiceDto.tags,
+        tags: createServiceDto.tags.split(','),
+      },
+      include: {
+        vendor: true,
+        activityspecific: true,
       },
     });
   }
@@ -45,22 +49,30 @@ export class ServiceService {
       where: {
         id: id,
       },
+      include: {
+        vendor: true,
+        activityspecific: true,
+      },
     });
   }
 
   update(id: number, updateServiceDto: UpdateServiceDto) {
     const activitiesSpecificIdNumber: number[] =
-      updateServiceDto.activitiesSpecificId.map(Number);
+      updateServiceDto.activitiesSpecificId?.split(',').map(Number);
     return this.prisma.service.update({
       where: {
         id: id,
+      },
+      include: {
+        vendor: true,
+        activityspecific: true,
       },
       data: {
         vendor: {
           connect: { id: updateServiceDto.vendorId },
         },
         activityspecific: {
-          set: activitiesSpecificIdNumber.map((id) => ({ id })),
+          set: activitiesSpecificIdNumber?.map((id) => ({ id })),
         },
         name: updateServiceDto.name,
         description: updateServiceDto.description,
@@ -69,7 +81,8 @@ export class ServiceService {
         location: updateServiceDto.location,
         RTO: updateServiceDto.RTO,
         RPO: updateServiceDto.RPO,
-        tags: updateServiceDto.tags,
+        tags: updateServiceDto.tags.split(','),
+        updatedAt: new Date(),
       },
     });
   }

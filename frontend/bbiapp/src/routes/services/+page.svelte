@@ -8,6 +8,8 @@
   import { PlusOutline } from "flowbite-svelte-icons";
   import { numberSecToTime } from "$lib/utils";
   import { Service } from "$lib/types/class/entities";
+    import type { ServiceEntity } from "$lib/types/entities/service.entity";
+    import { notificationStore } from "$lib/stores";
 
   export let data: {error: string, data: Service[]} = {error: "", data: []};
 
@@ -97,7 +99,7 @@
       },
     ],
     actions: [Actions.edit, Actions.delete],
-    endpoint: "/services",
+    endpoint: "services",
     titleColumn: "Name",
   };
 
@@ -125,6 +127,14 @@
   });
 
   let checkItems: number[] = [];
+
+  function updateData(event: CustomEvent) {
+    const newService: ServiceEntity = event.detail.data;
+    notificationStore.show("Service: <strong>" + newService.name + "</strong> updated successfully", "success");
+    const id: number = event.detail.id;
+    const index: number = data.data.findIndex((service) => service.id === id);
+    data.data[index] = new Service(newService);
+  }
 </script>
 
 <main>
@@ -149,7 +159,7 @@
     </div>
 
     {#if data.data && data.data.length > 0}
-      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems />
+      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems on:save={updateData}/>
     {:else}
       <p>No data</p>
     {/if}
@@ -159,6 +169,8 @@
       dataToEdit={createData}
       title="Create New Service"
       modalState={createModalState}
+      id={createData.id}
+      endpoint={tableShape.endpoint}
     />
   </div>
 </main>

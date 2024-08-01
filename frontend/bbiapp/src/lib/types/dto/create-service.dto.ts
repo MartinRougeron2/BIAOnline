@@ -7,7 +7,7 @@ export interface CreateServiceDto {
 
   status: string;
 
-  activitiesSpecificId: string[];
+  activitiesSpecificId: string;
 
   location: string;
 
@@ -17,5 +17,5 @@ export interface CreateServiceDto {
 
   vendorId: number;
 
-  tags: string[];
+  tags: string;
 }

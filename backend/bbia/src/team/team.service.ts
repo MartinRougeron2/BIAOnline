@@ -39,7 +39,7 @@ export class TeamService {
   }
 
   update(id: number, updateTeamDto: UpdateTeamDto) {
-    const usersIdNumber: number[] = updateTeamDto.usersId.map(Number);
+    const usersIdNumber: number[] = updateTeamDto.usersId?.map(Number);
 
     return this.prisma.team.update({
       where: {
@@ -47,7 +47,7 @@ export class TeamService {
       },
       data: {
         users: {
-          set: usersIdNumber.map((id) => ({ id })),
+          set: usersIdNumber?.map((id) => ({ id })),
         },
         name: updateTeamDto.name,
         description: updateTeamDto.description,
@@ -55,6 +55,7 @@ export class TeamService {
         status: updateTeamDto.status,
         membersnumber: updateTeamDto.membersnumber,
         tags: updateTeamDto.tags,
+        updatedAt: new Date(),
       },
     });
   }

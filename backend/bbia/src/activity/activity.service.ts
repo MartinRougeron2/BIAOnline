@@ -42,7 +42,13 @@ export class ActivityService {
         id: completeActivityDto.id,
       },
       include: {
-        services: true,
+        services: {
+          include: {
+            vendor: true,
+          },
+        },
+        teams: true,
+        impacts: true,
       },
       data: {
         RTO: completeActivityDto.RTO,
@@ -82,6 +88,15 @@ export class ActivityService {
       where: {
         id: id,
       },
+      include: {
+        services: {
+          include: {
+            vendor: true,
+          },
+        },
+        teams: true,
+        impacts: true,
+      },
       data: {
         RTO: updateActivityDto.RTO,
         RPO: updateActivityDto.RPO,
@@ -94,6 +109,7 @@ export class ActivityService {
           connect: updateActivityDto.teamsId?.map((id) => ({ id: Number(id) })),
         },
         ...updateActivityDto,
+        updatedAt: new Date(),
       },
     });
   }
