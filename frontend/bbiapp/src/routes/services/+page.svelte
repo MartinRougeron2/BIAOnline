@@ -132,6 +132,10 @@
     const newService: ServiceEntity = event.detail.data;
     notificationStore.show("Service: <strong>" + newService.name + "</strong> updated successfully", "success");
     const id: number = event.detail.id;
+    if (id === 0) {
+      data.data.push(new Service(newService));
+      return;
+    }
     const index: number = data.data.findIndex((service) => service.id === id);
     data.data[index] = new Service(newService);
   }

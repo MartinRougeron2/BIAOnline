@@ -4,36 +4,78 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 import { CompleteActivityDto } from './dto/complete-activity.dto';
 
 import { PrismaService } from '../prisma/prisma.service';
+import { ImpactService } from 'src/impact/impact.service';
 
 @Injectable()
 export class ActivityService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly impactService: ImpactService,
+  ) {}
 
-  create(createActivityDto: CreateActivityDto) {
-    const servicesIdNumber: number[] = createActivityDto.servicesId.map(Number);
-    const teamsIdNumber: number[] = createActivityDto.teamsId.map(Number);
-    return this.prisma.activity.create({
-      data: {
-        RPO: 0,
-        RTO: 0,
-        teams: {
-          connect: teamsIdNumber.map((id) => ({ id })),
+  async create(createActivityDto: CreateActivityDto) {
+    const servicesIdNumber: number[] = createActivityDto.services.map(
+      (service) => service.id,
+    );
+    const teamsIdNumber: number[] = createActivityDto.teams.map(
+      (team) => team.id,
+    );
+    return await this.prisma.activity
+      .create({
+        data: {
+          RPO: 0,
+          RTO: 0,
+          teams: {
+            connect: teamsIdNumber.map((id) => ({ id })),
+          },
+          services: {
+            connect: servicesIdNumber.map((id) => ({ id })),
+          },
+          name: createActivityDto.name,
+          description: createActivityDto.description,
+          criticality: createActivityDto.criticality,
+          owner: createActivityDto.owner,
+          validation: createActivityDto.validation,
+          volume: createActivityDto.volume,
+          frequency: createActivityDto.frequency,
+          location: createActivityDto.location,
+          status: createActivityDto.status,
+          tags: createActivityDto.tags.split(','),
         },
-        services: {
-          connect: servicesIdNumber.map((id) => ({ id })),
-        },
-        name: createActivityDto.name,
-        description: createActivityDto.description,
-        criticality: createActivityDto.criticality,
-        owner: createActivityDto.owner,
-        validation: createActivityDto.validation,
-        volume: createActivityDto.volume,
-        frequency: createActivityDto.frequency,
-        location: createActivityDto.location,
-        status: createActivityDto.status,
-        tags: createActivityDto.tags,
-      },
-    });
+      })
+      .then(async (activity) => {
+        if (createActivityDto.impacts.length > 0) {
+          const impactsToCreate = createActivityDto.impacts.filter(
+            (impact) => impact.id === 0,
+          );
+          const newImpacts = [];
+          impactsToCreate.forEach((impact) => {
+            newImpacts.push(
+              this.impactService.create({
+                name: impact.name,
+                timeline: impact.timeline,
+                impacts: impact.impacts,
+                activityId: activity.id,
+              }),
+            );
+          });
+
+          const impactsToUpdate = createActivityDto.impacts.filter(
+            (impact) => impact.id !== 0,
+          );
+          impactsToUpdate.forEach((impact) => {
+            newImpacts.push(
+              this.impactService.update(impact.id, {
+                name: impact.name,
+                timeline: impact.timeline,
+                impacts: impact.impacts,
+              }),
+            );
+          });
+          await Promise.all(newImpacts);
+        }
+        return activity;
+      });
   }
 
   complete(completeActivityDto: CompleteActivityDto) {
@@ -79,11 +121,18 @@ export class ActivityService {
       include: {
         services: true,
         teams: true,
+        impacts: true,
       },
     });
   }
 
   update(id: number, updateActivityDto: UpdateActivityDto) {
+    const servicesIdNumber: number[] = updateActivityDto.services.map(
+      (service) => service.id,
+    );
+    const teamsIdNumber: number[] = updateActivityDto.teams.map(
+      (team) => team.id,
+    );
     return this.prisma.activity.update({
       where: {
         id: id,
@@ -101,14 +150,21 @@ export class ActivityService {
         RTO: updateActivityDto.RTO,
         RPO: updateActivityDto.RPO,
         services: {
-          connect: updateActivityDto.servicesId?.map((id) => ({
-            id: Number(id),
-          })),
+          set: servicesIdNumber.map((id) => ({ id })),
         },
         teams: {
-          connect: updateActivityDto.teamsId?.map((id) => ({ id: Number(id) })),
+          set: teamsIdNumber.map((id) => ({ id })),
         },
-        ...updateActivityDto,
+        name: updateActivityDto.name,
+        description: updateActivityDto.description,
+        criticality: updateActivityDto.criticality,
+        owner: updateActivityDto.owner,
+        validation: updateActivityDto.validation,
+        volume: updateActivityDto.volume,
+        frequency: updateActivityDto.frequency,
+        location: updateActivityDto.location,
+        status: updateActivityDto.status,
+        tags: updateActivityDto.tags.split(','),
         updatedAt: new Date(),
       },
     });

@@ -50,7 +50,8 @@ function impactsTimelineToImpactType(
     }),
     scaleMin: 0,
     scaleMax: max,
-    colors: ["#FF0000", "#00FF00"],
+    // 6 grades from green to red
+    colors: ["#00FF00", "#33FF00", "#66FF00", "#99FF00", "#CCFF00", "#FFFF00"],
   };
 }
 

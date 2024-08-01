@@ -90,6 +90,10 @@
     const newTeam: TeamEntity = event.detail.data;
     notificationStore.show("Team: " + newTeam.name + " updated successfully", "success");
     const id: number = event.detail.id;
+    if (id === 0) {
+      data.data.push(new Team(newTeam));
+      return;
+    }
     const index: number = data.data.findIndex((team) => team.id === id);
     data.data[index] = new Team(newTeam);
   }

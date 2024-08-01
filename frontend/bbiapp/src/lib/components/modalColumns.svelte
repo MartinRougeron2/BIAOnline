@@ -4,7 +4,7 @@
   import type { Data, Column } from "./table.types";
   import { Types as TableTypes } from "./table.enums";
 
-  import { patchData, type IResponse } from "$lib/auth";
+  import { patchData, postData, type IResponse } from "$lib/auth";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
@@ -38,7 +38,16 @@
 
   async function save() {
     loading = true;
-    
+    if (id === 0) {
+      const response: IResponse | void = await postData(endpoint, dataToEdit);
+      loading = false;
+      if (!response) return;
+      if (response.json) {
+        close();
+        dispatch("save", response.json);
+      }
+      return; // else
+    }
     const response: IResponse | void = await patchData(endpoint, id, dataToEdit);
     loading = false;
     if (!response) return;

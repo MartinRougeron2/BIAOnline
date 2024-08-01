@@ -9,19 +9,19 @@ export class TeamService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createTeamDto: CreateTeamDto) {
-    const usersIdNumber: number[] = createTeamDto.usersId.map(Number);
+    const usersIdNumber: number[] = createTeamDto.usersId?.map(Number);
 
     return this.prisma.team.create({
       data: {
         users: {
-          connect: usersIdNumber.map((id) => ({ id })),
+          connect: usersIdNumber?.map((id) => ({ id })),
         },
         name: createTeamDto.name,
         description: createTeamDto.description,
         owner: createTeamDto.owner,
         status: createTeamDto.status,
-        membersnumber: createTeamDto.membersnumber,
-        tags: createTeamDto.tags,
+        membersnumber: Number(createTeamDto.membersnumber),
+        tags: createTeamDto.tags.split(','),
       },
     });
   }
@@ -53,8 +53,8 @@ export class TeamService {
         description: updateTeamDto.description,
         owner: updateTeamDto.owner,
         status: updateTeamDto.status,
-        membersnumber: updateTeamDto.membersnumber,
-        tags: updateTeamDto.tags,
+        membersnumber: Number(updateTeamDto.membersnumber),
+        tags: updateTeamDto.tags.split(','),
         updatedAt: new Date(),
       },
     });

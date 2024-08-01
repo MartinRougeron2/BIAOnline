@@ -17,7 +17,7 @@
   } from "flowbite-svelte";
   import { AngleDownOutline, AngleUpOutline } from "flowbite-svelte-icons";
   import { impactsTimelineToImpactType, numberSecToTime } from "$lib/utils";
-  import { Activity } from "$lib/types/class/entities";
+  import { Activity, Service, Team } from "$lib/types/class/entities";
   import ViewImpact from "$lib/components/viewImpact.svelte";
   import type { TeamActivity } from "$lib/types/entities/team.entity";
   import type { ServiceActivity } from "$lib/types/entities/service.entity";
@@ -42,85 +42,27 @@
   $: impactShow = false;
   $: RTOhow = false;
 
-  const teams: TeamActivity[] = [
-    { id: 1, name: "Team 1" },
-    { id: 2, name: "Team 2" },
-    { id: 3, name: "Team 3" },
-    { id: 4, name: "Team 4" },
-    { id: 5, name: "Team 5" },
-  ];
+  export let teams: Team[] = [];
 
-  const services: ServiceActivity[] = [
-    {
-      id: 1,
-      name: "Severine",
-      RTO: 567888,
-      RPO: 665,
-      vendor: { id: 1, name: "Vendor 1" },
-    },
-    {
-      id: 2,
-      name: "LCL 2",
-      RTO: 56788,
-      RPO: 665,
-      vendor: { id: 2, name: "Vendor 2" },
-    },
-    {
-      id: 3,
-      name: "Mimecast 1",
-      RTO: 58,
-      RPO: 665,
-      vendor: { id: 3, name: "Vendor 3" },
-    },
-    {
-      id: 4,
-      name: "Service 4",
-      RTO: 568,
-      RPO: 665,
-      vendor: { id: 4, name: "Vendor 4" },
-    },
-    {
-      id: 5,
-      name: "Service 5",
-      RTO: 56888,
-      RPO: 665,
-      vendor: { id: 5, name: "Vendor 5" },
-    },
-    {
-      id: 6,
-      name: "Service 6",
-      RTO: 5888,
-      RPO: 665,
-      vendor: { id: 6, name: "Vendor 6" },
-    },
-    {
-      id: 7,
-      name: "Service 7",
-      RTO: 5688,
-      RPO: 665,
-      vendor: { id: 7, name: "Vendor 8" },
-    },
-    {
-      id: 8,
-      name: "Service 8",
-      RTO: 888,
-      RPO: 665,
-      vendor: { id: 9, name: "Vendor 9" },
-    },
-  ];
+  export let services: Service[] = [];
 
   let servicesSelected = item.services.map((service) => service.id);
   let teamsSelected = item.teams.map((team) => team.id);
 
   function saveUnderlying() {
-    const servicesActivitySelected: ServiceActivity[] = services.filter(
+    const servicesActivitySelected: Service[] = services.filter(
       (service) => servicesSelected.includes(service.id),
     );
-    const teamsActivitySelected: TeamActivity[] = teams.filter((team) =>
+    const teamsActivitySelected: Team[] = teams.filter((team) =>
       teamsSelected.includes(team.id),
     );
-    item.services = servicesActivitySelected;
-    item.teams = teamsActivitySelected;
+    item.services = servicesActivitySelected.map((service) => ({
+      id: service.id,
+      name: service.name,
+      vendor: service.vendor,
+      RTO: service.RTO,
+    } as ServiceActivity));
+    item.teams = teamsActivitySelected as TeamActivity[];
   }
 </script>
 
@@ -376,7 +318,7 @@
               step={3600}
               disabled={!editRTO}
             />
-            <RtoViewer bind:activity={item} />
+            <RtoViewer bind:activity={item} heightCanvas={200} />
           </div>
         {/if}
       </div>

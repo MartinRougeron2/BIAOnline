@@ -174,13 +174,7 @@ class Activity implements ActivityEntity {
     this.updatedAt = activity.updatedAt;
     this.updatedAtDate = stringToDate(activity.updatedAt);
 
-    if (
-      activity.impacts[0] &&
-      activity.impacts[0].id &&
-      activity.impacts[0].name &&
-      activity.impacts[0].timeline &&
-      activity.impacts[0].impacts
-    ) {
+    if (activity.impacts.length > 0) {
       this.impacts = activity.impacts.map((impact) => {
         return {
           id: impact.id ?? 0,
@@ -190,12 +184,10 @@ class Activity implements ActivityEntity {
         };
       });
     } else {
+      console.warn("Activity has no impacts", activity.impacts[0]);
       this.impacts = [];
     }
-    if (
-      activity.services[0] &&
-      activity.services[0].id
-    ) {
+    if (activity.services.length > 0) {
       this.services = activity.services.map((service) => {
         return {
           id: service.id,
@@ -209,9 +201,10 @@ class Activity implements ActivityEntity {
         };
       });
     } else {
+      console.warn("Activity has no services");
       this.services = [];
     }
-    if (activity.teams[0] && activity.teams[0].id && activity.teams[0].name) {
+    if (activity.teams.length > 0) {
       this.teams = activity.teams.map((team) => {
         return {
           id: team.id,
@@ -219,6 +212,7 @@ class Activity implements ActivityEntity {
         };
       });
     } else {
+      console.warn("Activity has no teams");
       this.teams = [];
     }
     this.criticality = activity.criticality;

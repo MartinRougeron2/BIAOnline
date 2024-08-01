@@ -157,103 +157,7 @@
     detailComponent: DetailActivity,
   };
 
-  let createModalState: boolean = false;
-
   let checkItems: number[] = [];
-
-  let createData: Activity = new Activity({
-    id: 0,
-    name: "",
-    description: "",
-    owner: "",
-    status: "",
-    location: "",
-    RTO: 0,
-    RPO: 0,
-    tags: [],
-    createdAt: (new Date()).toLocaleDateString(),
-    updatedAt: (new Date()).toLocaleDateString(),
-    criticality: "High",
-    validation: "Mr. John Doe",
-    volume: "4500 / 5000",
-    frequency: "Daily",
-    services: [
-      {
-        id: 1,
-        name: "Service 1",
-        RTO: 567888,
-        RPO: 665,
-        vendor: { id: 1, name: "Vendor 1" },
-      },
-      {
-        id: 2,
-        name: "Service 2",
-        RTO: 567888,
-        RPO: 665,
-        vendor: { id: 2, name: "Vendor 2" },
-      },
-      {
-        id: 3,
-        name: "Service 3",
-        RTO: 567888,
-        RPO: 665,
-        vendor: { id: 3, name: "Vendor 3" },
-      },
-      {
-        id: 4,
-        name: "Service 4",
-        RTO: 567888,
-        RPO: 665,
-        vendor: { id: 4, name: "Vendor 4" },
-      },
-      {
-        id: 5,
-        name: "Service 5",
-        RTO: 567888,
-        RPO: 665,
-        vendor: { id: 5, name: "Vendor 5" },
-      },
-    ],
-    teams: [
-      { id: 1, name: "Team 1" },
-      { id: 2, name: "Team 2" },
-      { id: 3, name: "Team 3" },
-      { id: 4, name: "Team 4" },
-      { id: 5, name: "Team 5" },
-    ],
-    impacts: [
-      {
-        id: 1,
-        name: "Impact 1",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 5, 5],
-      },
-      {
-        id: 2,
-        name: "Impact 2",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 5, 5],
-      },
-      {
-        id: 3,
-        name: "Impact 3",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 5, 5],
-      },
-      {
-        id: 4,
-        name: "Impact 4",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 5, 5],
-      },
-      {
-        id: 5,
-        name: "Impact 5",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 5, 5],
-      },
-    ],
-  });
 
   function updateData(event: CustomEvent) {
     const newActivity: ActivityEntity = event.detail.data;
@@ -280,7 +184,7 @@
         <Button
           color="green"
           class="mt-2"
-          on:click={() => (createModalState = true)}
+          href="/activities/create"
         >
           <PlusOutline name="add" class="mr-2" /> Add New Activity
         </Button>
@@ -295,15 +199,6 @@
     {:else}
       <p>No data</p>
     {/if}
-
-    <ModalColumns
-      columns={tableShape.columns}
-      dataToEdit={createData}
-      title="Create New Service"
-      modalState={createModalState}
-      id={createData.id}
-      endpoint={tableShape.endpoint}
-    />
   </div>
 </main>
 

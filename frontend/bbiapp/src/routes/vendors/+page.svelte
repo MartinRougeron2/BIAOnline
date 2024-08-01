@@ -102,6 +102,10 @@
     const newVendor: VendorEntity = event.detail.data;
     notificationStore.show("Vendor: " + newVendor.name + " updated successfully", "success");
     const id: number = event.detail.id;
+    if (id === 0) {
+      data.data.push(new Vendor(newVendor));
+      return;
+    }
     const index: number = data.data.findIndex((vendor) => vendor.id === id);
     data.data[index] = new Vendor(newVendor);
   }

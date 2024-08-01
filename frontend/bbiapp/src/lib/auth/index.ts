@@ -68,4 +68,36 @@ async function patchData(url: string, id: number, data: any) : Promise<void | IR
     }
 }
 
-export { fetchData, patchData, type IResponse };
+// POSTs data to the API
+async function postData(url: string, data: any) : Promise<void | IResponse> {
+    try {
+        const response = await fetch(API_URL + url, {
+            method: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            credentials: 'include',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            if (response.status === 401) {
+                notificationStore.show('You are not authorized to view this page', 'error');
+                return { status: 401, json: null };
+            }
+            else {
+                notificationStore.show('An error occurred', 'error');
+                return { status: response.status, json: null };
+            }
+        }
+        return { status: response.status, json: await response.json() };
+    }
+    catch (error: any) {
+        console.error(error.message)
+        notificationStore.show(error.message, 'error');
+    }
+}
+
+export { fetchData, patchData, postData, type IResponse };

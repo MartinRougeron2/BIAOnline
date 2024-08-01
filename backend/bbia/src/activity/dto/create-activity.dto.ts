@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Impact } from 'src/impact/entities/impact.entity';
+import { Service } from 'src/service/entities/service.entity';
+import { Team } from 'src/team/entities/team.entity';
 
 export class CreateActivityDto {
   @ApiProperty()
@@ -26,14 +29,17 @@ export class CreateActivityDto {
   location: string;
 
   @ApiProperty()
+  impacts: Partial<Impact>[];
+
+  @ApiProperty()
   status: string;
 
   @ApiProperty()
-  servicesId: string[];
+  services: Partial<Service>[];
 
   @ApiProperty()
-  teamsId: string[];
+  teams: Partial<Team>[];
 
   @ApiProperty()
-  tags: string[];
+  tags: string;
 }
