@@ -161,6 +161,9 @@ class Activity implements ActivityEntity {
   RPO: number;
 
   constructor(activity: ActivityEntity) {
+
+    console.log(activity);
+    
     this.id = activity.id;
     this.name = activity.name;
     this.description = activity.description;
@@ -191,10 +194,7 @@ class Activity implements ActivityEntity {
     }
     if (
       activity.services[0] &&
-      activity.services[0].id &&
-      activity.services[0].name &&
-      activity.services[0].RTO &&
-      activity.services[0].RPO
+      activity.services[0].id
     ) {
       this.services = activity.services.map((service) => {
         return {

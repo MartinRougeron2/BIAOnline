@@ -94,7 +94,7 @@
         </SidebarItem>
       </SidebarGroup>
       <SidebarGroup border>
-        <SidebarItem label="Billing Team" href="/billing/team">
+        <!-- <SidebarItem label="Billing Team" href="/billing/team">
           <svelte:fragment slot="icon">
             <CashSolid
               class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -107,7 +107,7 @@
               class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             />
           </svelte:fragment>
-        </SidebarItem>
+        </SidebarItem> -->
       </SidebarGroup>
     </SidebarWrapper>
   </Sidebar>

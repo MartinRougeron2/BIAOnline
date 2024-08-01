@@ -54,7 +54,11 @@ export class ActivityService {
   findAll() {
     return this.prisma.activity.findMany({
       include: {
-        services: true,
+        services: {
+          include: {
+            vendor: true,
+          },
+        },
         teams: true,
         impacts: true,
       },
@@ -78,7 +82,19 @@ export class ActivityService {
       where: {
         id: id,
       },
-      data: updateActivityDto,
+      data: {
+        RTO: updateActivityDto.RTO,
+        RPO: updateActivityDto.RPO,
+        services: {
+          connect: updateActivityDto.servicesId?.map((id) => ({
+            id: Number(id),
+          })),
+        },
+        teams: {
+          connect: updateActivityDto.teamsId?.map((id) => ({ id: Number(id) })),
+        },
+        ...updateActivityDto,
+      },
     });
   }
 
