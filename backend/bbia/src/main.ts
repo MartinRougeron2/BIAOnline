@@ -5,6 +5,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const PORT = process.env.PORT || 3000;
+
   const config = new DocumentBuilder()
     .setTitle('BBIA API')
     .setVersion('0.0')
@@ -13,6 +15,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors();
-  await app.listen(3000);
+  await app.listen(PORT);
 }
 bootstrap();
