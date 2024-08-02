@@ -12,12 +12,10 @@ async function fetchData(url: string): Promise<void | IResponse> {
     const response = await fetch(API_URL + url, {
       method: "GET",
       headers: {
-        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       credentials: "include",
-      referrerPolicy: "no-referrer",
     });
     if (!response.ok) {
       if (response.status === 401) {
@@ -48,12 +46,10 @@ async function patchData(
     const response = await fetch(API_URL + url + "/" + id, {
       method: "PATCH",
       headers: {
-        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       credentials: "include",
-      referrerPolicy: "no-referrer",
       body: JSON.stringify(data),
     });
     if (!response.ok) {
