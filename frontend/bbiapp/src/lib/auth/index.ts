@@ -1,5 +1,6 @@
 import { API_URL } from "../constan.local";
 import { notificationStore, type INotificationStore } from "../stores";
+import { dev } from "$app/environment";
 
 interface IResponse {
   status: number;
@@ -12,6 +13,9 @@ async function fetchData(url: string): Promise<void | IResponse> {
     const response = await fetch(API_URL + url, {
       method: "GET",
       headers: {
+        "Access-Control-Allow-Origin": dev
+          ? "*"
+          : "https://backendbbia.martinrougeron.me",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
@@ -46,6 +50,9 @@ async function patchData(
     const response = await fetch(API_URL + url + "/" + id, {
       method: "PATCH",
       headers: {
+        "Access-Control-Allow-Origin": dev
+          ? "*"
+          : "https://backendbbia.martinrougeron.me",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
@@ -77,6 +84,9 @@ async function postData(url: string, data: any): Promise<void | IResponse> {
     const response = await fetch(API_URL + url, {
       method: "POST",
       headers: {
+        "Access-Control-Allow-Origin": dev
+          ? "*"
+          : "https://backendbbia.martinrougeron.me",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
