@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // "/api": "http://localhost:3000/api/v1"
       "/api": {
-        target: "https://urchin-app-vv7cz.ondigitalocean.app",
+        target: "http://localhost:3000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/api/v1"),
       },
