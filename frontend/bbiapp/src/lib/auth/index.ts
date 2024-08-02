@@ -13,13 +13,9 @@ async function fetchData(url: string): Promise<void | IResponse> {
     const response = await fetch(API_URL + url, {
       method: "GET",
       headers: {
-        "Access-Control-Allow-Origin": dev
-          ? "*"
-          : "https://backendbbia.martinrougeron.me",
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      credentials: "include",
     });
     if (!response.ok) {
       if (response.status === 401) {
@@ -50,13 +46,9 @@ async function patchData(
     const response = await fetch(API_URL + url + "/" + id, {
       method: "PATCH",
       headers: {
-        "Access-Control-Allow-Origin": dev
-          ? "*"
-          : "https://backendbbia.martinrougeron.me",
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      credentials: "include",
       body: JSON.stringify(data),
     });
     if (!response.ok) {
@@ -84,13 +76,9 @@ async function postData(url: string, data: any): Promise<void | IResponse> {
     const response = await fetch(API_URL + url, {
       method: "POST",
       headers: {
-        "Access-Control-Allow-Origin": dev
-          ? "*"
-          : "https://backendbbia.martinrougeron.me",
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      credentials: "include",
       body: JSON.stringify(data),
     });
     if (!response.ok) {
