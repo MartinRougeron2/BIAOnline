@@ -64,8 +64,7 @@ function stringToHashHexColor(str: string): string {
 
     return hash;
   };
-  let hash = hashF(str) ** 2 % 0xffffff;
-  return "#" + hash.toString(16);
+  return "#" + (hashF(str) & 0x00ffffff).toString(16).toUpperCase();
 }
 
 export { numberSecToTime, impactsTimelineToImpactType, stringToHashHexColor };

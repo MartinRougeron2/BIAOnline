@@ -21,5 +21,5 @@ export interface CreateActivityDto {
 
   teamsId: string[];
 
-  tags: string[];
+  tags: string | string[];
 }

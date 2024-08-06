@@ -11,12 +11,14 @@
   import { Activity } from "$lib/types/class/entities";
   import DetailActivity from "$lib/components/detailActivity.svelte";
   import type { ActivityEntity } from "$lib/types/entities/activity.entity";
-    import { notificationStore } from "$lib/stores";
+  import { notificationStore } from "$lib/stores";
 
   let defaultTimeLine: number[] = [3600, 7200, 10800, 86400, 172800, 259200];
 
-  export let data: {error: string, data: Activity[]} = {error: "", data: []};
-  
+  export let data: { error: string; data: Activity[] } = {
+    error: "",
+    data: [],
+  };
 
   let tableShape: TableShape = {
     columns: [
@@ -107,13 +109,13 @@
       {
         name: "Recovery Time Objective (seconds)",
         color: "blue",
-        type: Types.number,
+        type: Types.time,
         field: (data: Activity) => numberSecToTime(data.RTO),
       },
       {
         name: "Recovery Point Objective (seconds)",
         color: "blue",
-        type: Types.number,
+        type: Types.time,
         field: (data: Activity) => numberSecToTime(data.RPO),
         tableVisible: false,
       },
@@ -159,9 +161,14 @@
 
   let checkItems: number[] = [];
 
+  $: activities = data.data.map((activity) => new Activity(activity));
+
   function updateData(event: CustomEvent) {
     const newActivity: ActivityEntity = event.detail.data;
-    notificationStore.show("Activity: " + newActivity.name + " updated successfully", "success");
+    notificationStore.show(
+      "Activity: " + newActivity.name + " updated successfully",
+      "success",
+    );
     const id: number = event.detail.id;
     const index: number = data.data.findIndex((activity) => activity.id === id);
     data.data[index] = new Activity(newActivity);
@@ -181,11 +188,7 @@
       />
 
       <div>
-        <Button
-          color="green"
-          class="mt-2"
-          href="/activities/create"
-        >
+        <Button color="green" class="mt-2" href="/activities/create">
           <PlusOutline name="add" class="mr-2" /> Add New Activity
         </Button>
         <Button color="light" class="mt-2">
@@ -195,7 +198,12 @@
     </div>
 
     {#if data.data && data.data.length > 0}
-      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems on:save={updateData}/>
+      <CrudTable
+        TableShape={tableShape}
+        TableData={activities}
+        bind:checkItems
+        on:save={updateData}
+      />
     {:else}
       <p>No data</p>
     {/if}

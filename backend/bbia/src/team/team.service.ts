@@ -21,7 +21,10 @@ export class TeamService {
         owner: createTeamDto.owner,
         status: createTeamDto.status,
         membersnumber: Number(createTeamDto.membersnumber),
-        tags: createTeamDto.tags.split(','),
+        tags:
+          typeof createTeamDto.tags === 'string'
+            ? createTeamDto.tags.split(',')
+            : createTeamDto.tags,
       },
     });
   }
@@ -54,7 +57,10 @@ export class TeamService {
         owner: updateTeamDto.owner,
         status: updateTeamDto.status,
         membersnumber: Number(updateTeamDto.membersnumber),
-        tags: updateTeamDto.tags.split(','),
+        tags:
+          typeof updateTeamDto.tags === 'string'
+            ? updateTeamDto.tags.split(',')
+            : updateTeamDto.tags,
         updatedAt: new Date(),
       },
     });

@@ -35,21 +35,6 @@
   <Sidebar {activeUrl} class="w-48">
     <SidebarWrapper>
       <SidebarGroup>
-        <div class="flex justify-between items-center">
-          <h2 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
-            Navigation
-          </h2>
-          <Button
-            size="xs"
-            outline
-            round
-            color="none"
-            class="mt-2"
-            on:click={() => (state = false)}
-          >
-            <CloseOutline class="w-6 h-6" />
-          </Button>
-        </div>
         <SidebarItem label="Dashboard" href="/dashboard">
           <svelte:fragment slot="icon">
             <GridSolid
@@ -60,13 +45,6 @@
         <SidebarItem label="Activities" href="/activities">
           <svelte:fragment slot="icon">
             <DatabaseSolid
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-            />
-          </svelte:fragment>
-        </SidebarItem>
-        <SidebarItem label="Impacts" href="/impacts">
-          <svelte:fragment slot="icon">
-            <FileChartBarSolid
               class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             />
           </svelte:fragment>

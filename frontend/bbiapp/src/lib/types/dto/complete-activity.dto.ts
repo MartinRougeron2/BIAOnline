@@ -1,7 +1,7 @@
 export interface CompleteActivityDto {
   id: number;
 
-  RTO: number;
+  RTO: string;
 
-  RPO: number;
+  RPO: string;
 }

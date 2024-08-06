@@ -24,9 +24,12 @@ export class ServiceService {
         owner: createServiceDto.owner,
         status: createServiceDto.status,
         location: createServiceDto.location,
-        RTO: createServiceDto.RTO,
-        RPO: createServiceDto.RPO,
-        tags: createServiceDto.tags.split(','),
+        RTO: +createServiceDto.RTO,
+        RPO: +createServiceDto.RPO,
+        tags:
+          typeof createServiceDto.tags === 'string'
+            ? createServiceDto.tags.split(',')
+            : createServiceDto.tags,
       },
       include: {
         vendor: true,
@@ -79,9 +82,12 @@ export class ServiceService {
         owner: updateServiceDto.owner,
         status: updateServiceDto.status,
         location: updateServiceDto.location,
-        RTO: updateServiceDto.RTO,
-        RPO: updateServiceDto.RPO,
-        tags: updateServiceDto.tags.split(','),
+        RTO: +updateServiceDto.RTO,
+        RPO: +updateServiceDto.RPO,
+        tags:
+          typeof updateServiceDto.tags === 'string'
+            ? updateServiceDto.tags.split(',')
+            : updateServiceDto.tags,
         updatedAt: new Date(),
       },
     });

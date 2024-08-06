@@ -160,10 +160,32 @@ class Activity implements ActivityEntity {
   RTO: number;
   RPO: number;
 
-  constructor(activity: ActivityEntity) {
+  constructor(activity: ActivityEntity | null = null) {
+    if (activity === null) {
+      console.warn("Activity is null");
+      this.id = 0;
+      this.name = "";
+      this.description = "";
+      this.status = "";
+      this.tags = [];
+      this.createdAt = "";
+      this.createdAtDate = new Date();
+      this.updatedAt = "";
+      this.updatedAtDate = new Date();
+      this.impacts = [];
+      this.services = [];
+      this.teams = [];
+      this.criticality = "";
+      this.owner = "";
+      this.validation = "";
+      this.volume = "";
+      this.frequency = "";
+      this.location = "";
+      this.RTO = 0;
+      this.RPO = 0;
+      return;
+    }
 
-    console.log(activity);
-    
     this.id = activity.id;
     this.name = activity.name;
     this.description = activity.description;

@@ -24,6 +24,7 @@ interface Column {
   formVisible?: boolean;
   choices?: Choices[];
   position?: Position;
+  required?: boolean;
 }
 
 interface TableShape {

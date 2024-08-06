@@ -11,5 +11,5 @@ export interface CreateTeamDto {
 
   membersnumber: number;
 
-  tags: string[];
+  tags: string | string[];
 }

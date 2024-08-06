@@ -4,8 +4,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateActivityDto extends PartialType(CreateActivityDto) {
   @ApiProperty()
-  RTO: number;
+  RTO: string;
 
   @ApiProperty()
-  RPO: number;
+  RPO: string;
 }

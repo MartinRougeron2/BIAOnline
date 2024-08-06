@@ -4,100 +4,70 @@
   import { Activity } from "$lib/types/class/entities";
   import { notificationStore } from "../../../lib/stores";
 
-  let defaultTimeLine: number[] = [3600, 7200, 10800, 86400, 172800, 259200];
+  import Loader from "$lib/components/Loader.svelte";
+  import { patchData, type IResponse } from "$lib/auth";
 
-  let mockData: Activity = new Activity({
-    id: 1,
-    name: "Activity 1",
-    description: "Activity 1 description",
-    owner: "Owner 1",
-    status: "Active",
-    location: "Location 1",
-    RTO: 57888,
-    RPO: 665,
-    tags: ["tag1", "tag2"],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    criticality: "High",
-    validation: "Mr. John Doe",
-    volume: "4500 / 5000",
-    frequency: "Daily",
-    services: [
-      {
-        id: 1,
-        name: "Severine",
-        RTO: 567888,
-        RPO: 665,
-        vendor: { id: 1, name: "Vendor 1" },
-      },
-      {
-        id: 2,
-        name: "LCL 2",
-        RTO: 56788,
-        RPO: 665,
-        vendor: { id: 2, name: "Vendor 2" },
-      },
-      {
-        id: 3,
-        name: "Mimecast 1",
-        RTO: 58,
-        RPO: 665,
-        vendor: { id: 3, name: "Vendor 3" },
-      },
-      {
-        id: 4,
-        name: "Service 4",
-        RTO: 568,
-        RPO: 665,
-        vendor: { id: 4, name: "Vendor 4" },
-      },
-      {
-        id: 5,
-        name: "Service 5",
-        RTO: 56888,
-        RPO: 665,
-        vendor: { id: 5, name: "Vendor 5" },
-      },
-    ],
-    teams: [
-      { id: 1, name: "Team 1" },
-      { id: 5, name: "Team 5" },
-    ],
-    impacts: [
-      {
-        id: 1,
-        name: "Impact Finance",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 5, 5],
-      },
-      {
-        id: 2,
-        name: "Impact Image",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 1, 1, 1, 1],
-      },
-      {
-        id: 3,
-        name: "Impact Organization",
-        timeline: defaultTimeLine,
-        impacts: [0, 3, 4, 5, 5, 5],
-      },
-      {
-        id: 4,
-        name: "Impact Juri",
-        timeline: defaultTimeLine,
-        impacts: [0, 1, 2, 3, 4, 5],
-      },
-    ],
-  });
+  export let data: { error: string; data: Activity } = {
+    error: "",
+    data: new Activity(),
+  };
 
-  function saveActivity(event: CustomEvent<Activity>) {
+  let load = true;
+  $: saving = false;
+  $: activity = new Activity(data.data);
+
+  setTimeout(() => {
+    load = false;
+  }, 1000);
+
+  async function saveActivity(event: CustomEvent<Activity>) {
     // go to activity page
     if (event.detail.id) {
-      notificationStore.show("Activity saved successfully ", "success");
-      goto(`/activities`);
+      saving = true;
+      const res: IResponse = await patchData(
+        "activities",
+        event.detail.id,
+        event.detail,
+      );
+      if (res.status !== 200) {
+        switch (res.status) {
+          case 500:
+            notificationStore.show(
+              "Server error, please try again later",
+              "error",
+            );
+            break;
+          default:
+            notificationStore.show(
+              "Activity not saved, please check the data",
+              "error",
+            );
+            break;
+        }
+      } else {
+        notificationStore.show("Activity saved successfully ", "success");
+        goto(`/activities`);
+      }
     }
   }
 </script>
 
-<ActivityGet bind:item={mockData} on:save={saveActivity}></ActivityGet>
+<div style="transition: all 0.5s;" class="w-full h-full">
+  {#if data.error}
+    <p>{data.error}</p>
+  {:else if data.data.id && !load}
+    {#if saving}
+      <div
+        style="opacity: 0.5;z-index: 1000;padding: 0;position: absolute;top: 0;left: 0;width: 100%;height: 100%;"
+        class="flex justify-center items-center h-full"
+      >
+        <Loader loaderSize="lg" message="Saving..." dark />
+      </div>
+    {/if}
+    <ActivityGet item={activity} on:save={saveActivity}></ActivityGet>
+  {:else}
+    <div class="flex justify-center items-center h-full">
+      <Loader loaderSize="lg" message="Loading..." />
+    </div>
+  {/if}
+</div>

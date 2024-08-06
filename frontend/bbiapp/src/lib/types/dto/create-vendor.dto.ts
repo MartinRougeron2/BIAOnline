@@ -7,9 +7,9 @@ export interface CreateVendorDto {
 
   status: string;
 
-  tags: string[];
+  tags: string | string[];
 
-  defaultRTO: number;
+  defaultRTO: string;
 
-  defaultRPO: number;
+  defaultRPO: string;
 }

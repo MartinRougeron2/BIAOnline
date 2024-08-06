@@ -19,25 +19,6 @@
     "#17a2b8aa",
   ];
 
-  // $: maxImpacts = {
-  //         name: 'Max Impact',
-  //         impacts: impacts[0].impacts.map((impact, index) => {
-  //             let max = 0;
-  //             impacts.forEach(impact => {
-  //                 if (impact.impacts[index].impactSize > max) {
-  //                     max = impact.impacts[index].impactSize;
-  //                 }
-  //             });
-  //             return {
-  //                 time: impact.time,
-  //                 impactSize: max
-  //             }
-  //         }),
-  //         scaleMin: impacts[0].scaleMin,
-  //         scaleMax: impacts[0].scaleMax,
-  //         colors: impacts[0].colors
-  //     } as ImpactType;
-
   $: data = {
     labels: impacts[0].impacts.map((impact) => numberSecToTime(impact.time)),
     datasets: [...impacts].map((impact, index) => {
@@ -52,7 +33,6 @@
         backgroundColor: chartColors[index % chartColors.length],
         tension: 0.01,
         pointRadius: 4,
-        pointBackgroundColor: "rgb(0, 0, 0)",
       };
     }),
   };
@@ -65,6 +45,11 @@
         beginAtZero: true,
         max: impacts[0].scaleMax + 1,
         min: impacts[0].scaleMin,
+        ticks: {
+          callback: function (value: number) {
+            return value > impacts[0].scaleMax ? "" : value;
+          },
+        },
       },
       x: {
         beginAtZero: true,

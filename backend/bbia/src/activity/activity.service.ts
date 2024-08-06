@@ -40,7 +40,10 @@ export class ActivityService {
           frequency: createActivityDto.frequency,
           location: createActivityDto.location,
           status: createActivityDto.status,
-          tags: createActivityDto.tags.split(','),
+          tags:
+            typeof createActivityDto.tags === 'string'
+              ? createActivityDto.tags.split(',')
+              : createActivityDto.tags,
         },
       })
       .then(async (activity) => {
@@ -93,8 +96,8 @@ export class ActivityService {
         impacts: true,
       },
       data: {
-        RTO: completeActivityDto.RTO,
-        RPO: completeActivityDto.RPO,
+        RTO: +completeActivityDto.RTO,
+        RPO: +completeActivityDto.RPO,
       },
     });
   }
@@ -119,7 +122,11 @@ export class ActivityService {
         id: id,
       },
       include: {
-        services: true,
+        services: {
+          include: {
+            vendor: true,
+          },
+        },
         teams: true,
         impacts: true,
       },
@@ -147,8 +154,8 @@ export class ActivityService {
         impacts: true,
       },
       data: {
-        RTO: updateActivityDto.RTO,
-        RPO: updateActivityDto.RPO,
+        RTO: +updateActivityDto.RTO,
+        RPO: +updateActivityDto.RPO,
         services: {
           set: servicesIdNumber.map((id) => ({ id })),
         },
@@ -164,7 +171,10 @@ export class ActivityService {
         frequency: updateActivityDto.frequency,
         location: updateActivityDto.location,
         status: updateActivityDto.status,
-        tags: updateActivityDto.tags.split(','),
+        tags:
+          typeof updateActivityDto.tags === 'string'
+            ? updateActivityDto.tags.split(',')
+            : updateActivityDto.tags,
         updatedAt: new Date(),
       },
     });

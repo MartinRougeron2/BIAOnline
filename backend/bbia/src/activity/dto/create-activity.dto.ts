@@ -41,5 +41,5 @@ export class CreateActivityDto {
   teams: Partial<Team>[];
 
   @ApiProperty()
-  tags: string;
+  tags: string | string[];
 }

@@ -10,7 +10,18 @@ export class VendorService {
 
   create(createVendorDto: CreateVendorDto) {
     return this.prisma.vendor.create({
-      data: createVendorDto,
+      data: {
+        name: createVendorDto.name,
+        description: createVendorDto.description,
+        contact: createVendorDto.contact,
+        status: createVendorDto.status,
+        tags:
+          typeof createVendorDto.tags === 'string'
+            ? createVendorDto.tags.split(',')
+            : createVendorDto.tags,
+        defaultRTO: +createVendorDto.defaultRTO,
+        defaultRPO: +createVendorDto.defaultRPO,
+      },
     });
   }
 
@@ -36,9 +47,12 @@ export class VendorService {
         description: updateVendorDto.description,
         contact: updateVendorDto.contact,
         status: updateVendorDto.status,
-        tags: updateVendorDto.tags,
-        defaultRTO: updateVendorDto.defaultRTO,
-        defaultRPO: updateVendorDto.defaultRPO,
+        tags:
+          typeof updateVendorDto.tags === 'string'
+            ? updateVendorDto.tags.split(',')
+            : updateVendorDto.tags,
+        defaultRTO: +updateVendorDto.defaultRTO,
+        defaultRPO: +updateVendorDto.defaultRPO,
         updatedAt: new Date(),
       },
     });

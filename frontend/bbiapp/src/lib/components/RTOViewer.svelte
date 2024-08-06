@@ -6,13 +6,11 @@
     stringToHashHexColor,
   } from "$lib/utils";
 
-  import { Bar, Line } from "svelte-chartjs";
+  import { Line } from "svelte-chartjs";
   import "chart.js/auto";
   import "chartjs-adapter-moment";
   import type { ImpactActivity } from "$lib/types/entities/impact.entity";
-  import type { ImpactType } from "./impactEvaulation.types";
   import type { ServiceActivity } from "$lib/types/entities/service.entity";
-  import { Input, Range } from "flowbite-svelte";
 
   export let activity: Activity;
 
@@ -28,38 +26,23 @@
     return max;
   };
 
-  function getLabels(
-    impacts: ImpactActivity[],
-    services: ServiceActivity[],
-  ): number[] {
-    let scales: number[] = [0];
-
-    impacts.forEach((impact) => {
-      impact.timeline.forEach((time) => {
-        if (!scales.includes(time)) scales.push(time);
-      });
-    });
-    services.forEach((service) => {
-      if (!scales.includes(service.RTO)) scales.push(service.RTO);
-    });
-
-    return scales.sort((a, b) => a - b);
-  }
-
   $: impacts = activity.impacts.map((impact) => {
     return impactsTimelineToImpactType(impact, maxImpact(activity.impacts));
   });
 
   export let heightCanvas: number;
-  let noname: boolean = false;
+  export let widthCanvas: number = 0;
 
   const borderColor = (color: string, opacity: number = 1) => {
     let colorMap: { [key: string]: string } = {
-      "Impact Finance": "#007bff",
-      "Impact Image": "#dc3545",
-      "Impact Organization": "#28a745",
-      "Impact Juri": "#ffc107",
-      "Max Impact": "#6f42c1",
+      // smooth pastel colors (blueish)
+      "Financial Impact": "#FFC0CB",
+      // smooth pastel colors (redish)
+      "Reputation Impact": "#FFA07A",
+      // smooth pastel colors (greenish)
+      "Operational Impact": "#98FB98",
+      // smooth pastel colors (blueish)
+      "Regulatory Impact": "#87CEFA",
     };
     const opacityHex = Math.floor(opacity * 255);
     return colorMap[color] + opacityHex.toString(16);
@@ -97,7 +80,6 @@
 
   $: xAxisImpacts = activity.impacts[0].timeline;
   $: xAxisServices = activity.services.map((service) => service.RTO);
-  // $: xAxis = xAxisImpacts.concat([activity.RTO]).sort((a, b) => a - b);
   $: xAxis = xAxisImpacts
     .concat(xAxisServices)
     .concat([0, activity.RTO])
@@ -127,13 +109,6 @@
       pointRadius: 4,
     };
   });
-
-  function setIndexBar(data: number, labels: number[]) {
-    let newData: number[] = labels.map((label) => 0);
-    let index = labels.findIndex((label) => label === data);
-    newData[index] = maxImpact(activity.impacts);
-    return newData;
-  }
 
   $: RTOVertical = {
     type: "bar",
@@ -213,6 +188,7 @@
   };
 
   $: options = {
+    responsive: false,
     animation: false,
     scales: {
       y: {
@@ -256,7 +232,7 @@
     plugins: {
       legend: {
         display: true,
-        position: "right",
+        position: "top",
       },
       tooltip: {
         callbacks: {
@@ -286,6 +262,8 @@
     {data}
     {options}
     id="impact-view"
-    style="height: {heightCanvas}px; width: 80%"
+    style="height: {heightCanvas}px; width: {widthCanvas > 0
+      ? widthCanvas + 'px'
+      : '100%'}"
   />
 </div>

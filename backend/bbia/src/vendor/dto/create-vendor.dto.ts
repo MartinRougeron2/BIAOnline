@@ -14,11 +14,11 @@ export class CreateVendorDto {
   status: string;
 
   @ApiProperty()
-  tags: string[];
+  tags: string | string[];
 
   @ApiProperty()
-  defaultRTO: number;
+  defaultRTO: string;
 
   @ApiProperty()
-  defaultRPO: number;
+  defaultRPO: string;
 }

@@ -20,5 +20,5 @@ export class CreateTeamDto {
   membersnumber: string;
 
   @ApiProperty()
-  tags: string;
+  tags: string | string[];
 }

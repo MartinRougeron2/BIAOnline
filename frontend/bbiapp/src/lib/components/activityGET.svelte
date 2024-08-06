@@ -2,7 +2,7 @@
   import ViewMaxImpact from "$lib/components/viewMaxImpact.svelte";
   import EditImpacts from "$lib/components/editImpacts.svelte";
   import RtoViewer from "$lib/components/RTOViewer.svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
   import {
     Range,
@@ -19,8 +19,16 @@
   import { impactsTimelineToImpactType, numberSecToTime } from "$lib/utils";
   import { Activity, Service, Team } from "$lib/types/class/entities";
   import ViewImpact from "$lib/components/viewImpact.svelte";
-  import type { TeamActivity } from "$lib/types/entities/team.entity";
-  import type { ServiceActivity } from "$lib/types/entities/service.entity";
+  import type {
+    TeamActivity,
+    TeamEntity,
+  } from "$lib/types/entities/team.entity";
+  import type {
+    ServiceActivity,
+    ServiceEntity,
+  } from "$lib/types/entities/service.entity";
+  import { fetchData, type IResponse } from "$lib/auth";
+  import type { VendorEntity } from "$lib/types/entities/vendor.entity";
 
   export let item: Activity;
 
@@ -42,26 +50,51 @@
   $: impactShow = false;
   $: RTOhow = false;
 
-  export let teams: Team[] = [];
+  let teams: Team[] = [];
 
-  export let services: Service[] = [];
+  let services: Service[] = [];
+
+  onMount(async () => {
+    const dataS: Promise<IResponse | void> = fetchData("services", fetch);
+    const dataT: Promise<IResponse | void> = fetchData("teams", fetch);
+
+    if (!dataS || !dataT) return;
+    const { servicesE, teamsE } = await Promise.all([dataS, dataT]).then(
+      ([dataS, dataT]) => {
+        if (dataS && dataT) {
+          return {
+            servicesE: dataS.json as ServiceEntity[],
+            teamsE: dataT.json as TeamEntity[],
+          };
+        }
+        return { servicesE: [], teamsE: [] };
+      },
+    );
+    if (servicesE && teamsE) {
+      services = servicesE.map((service) => new Service(service));
+      teams = teamsE.map((team) => new Team(team));
+    }
+  });
 
   let servicesSelected = item.services.map((service) => service.id);
   let teamsSelected = item.teams.map((team) => team.id);
 
   function saveUnderlying() {
-    const servicesActivitySelected: Service[] = services.filter(
-      (service) => servicesSelected.includes(service.id),
+    const servicesActivitySelected: Service[] = services.filter((service) =>
+      servicesSelected.includes(service.id),
     );
     const teamsActivitySelected: Team[] = teams.filter((team) =>
       teamsSelected.includes(team.id),
     );
-    item.services = servicesActivitySelected.map((service) => ({
-      id: service.id,
-      name: service.name,
-      vendor: service.vendor,
-      RTO: service.RTO,
-    } as ServiceActivity));
+    item.services = servicesActivitySelected.map(
+      (service) =>
+        ({
+          id: service.id,
+          name: service.name,
+          vendor: service.vendor,
+          RTO: service.RTO,
+        }) as ServiceActivity,
+    );
     item.teams = teamsActivitySelected as TeamActivity[];
   }
 </script>
@@ -270,7 +303,7 @@
           {/each}
         </div>
         <div class="mt-4 max-impact">
-          <ViewMaxImpact bind:impacts={dynamicImpacts} />
+          <ViewMaxImpact bind:impacts={dynamicImpacts} heightCanvas={300} />
         </div>
       {/if}
       <EditImpacts

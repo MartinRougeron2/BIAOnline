@@ -1,6 +1,6 @@
 import { fetchData, type IResponse } from "../../lib/auth";
-import type { ActivityEntity } from "../../lib/types/entities/activity.entity";
 import { Activity } from "../../lib/types/class/entities";
+import type { ActivityEntity } from "../../lib/types/entities/activity.entity";
 
 export const load = async ({ fetch }) => {
   const data: IResponse | void = await fetchData("activities", fetch);
@@ -12,8 +12,10 @@ export const load = async ({ fetch }) => {
   }
   const activitysE = data.json as ActivityEntity[];
 
+  const activitys = activitysE.map((activity) => new Activity(activity));
+
   return {
     error: null,
-    data: activitysE,
+    data: activitys,
   };
 };

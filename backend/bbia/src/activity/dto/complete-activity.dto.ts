@@ -5,8 +5,8 @@ export class CompleteActivityDto {
   id: number;
 
   @ApiProperty()
-  RTO: number;
+  RTO: string;
 
   @ApiProperty()
-  RPO: number;
+  RPO: string;
 }

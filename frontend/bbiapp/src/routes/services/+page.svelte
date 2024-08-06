@@ -8,10 +8,10 @@
   import { PlusOutline } from "flowbite-svelte-icons";
   import { numberSecToTime } from "$lib/utils";
   import { Service } from "$lib/types/class/entities";
-    import type { ServiceEntity } from "$lib/types/entities/service.entity";
-    import { notificationStore } from "$lib/stores";
+  import type { ServiceEntity } from "$lib/types/entities/service.entity";
+  import { notificationStore } from "$lib/stores";
 
-  export let data: {error: string, data: Service[]} = {error: "", data: []};
+  export let data: { error: string; data: Service[] } = { error: "", data: [] };
 
   let tableShape: TableShape = {
     columns: [
@@ -58,14 +58,14 @@
       {
         name: "Recovery Time Objective (seconds)",
         color: "blue",
-        type: Types.number,
+        type: Types.time,
         field: (data: Service) => numberSecToTime(data.RTO),
         fieldName: "RTO",
       },
       {
         name: "Recovery Point Objective (seconds)",
         color: "blue",
-        type: Types.number,
+        type: Types.time,
         field: (data: Service) => numberSecToTime(data.RPO),
         fieldName: "RPO",
       },
@@ -116,8 +116,8 @@
     RPO: 0,
     vendorId: 0,
     tags: [],
-    createdAt: (new Date()).toLocaleDateString(),
-    updatedAt: (new Date()).toLocaleDateString(),
+    createdAt: new Date().toLocaleDateString(),
+    updatedAt: new Date().toLocaleDateString(),
     vendor: {
       id: 0,
       name: "",
@@ -130,7 +130,10 @@
 
   function updateData(event: CustomEvent) {
     const newService: ServiceEntity = event.detail.data;
-    notificationStore.show("Service: <strong>" + newService.name + "</strong> updated successfully", "success");
+    notificationStore.show(
+      "Service: <strong>" + newService.name + "</strong> updated successfully",
+      "success",
+    );
     const id: number = event.detail.id;
     if (id === 0) {
       data.data.push(new Service(newService));
@@ -163,7 +166,12 @@
     </div>
 
     {#if data.data && data.data.length > 0}
-      <CrudTable TableShape={tableShape} TableData={data.data} bind:checkItems on:save={updateData}/>
+      <CrudTable
+        TableShape={tableShape}
+        TableData={data.data}
+        bind:checkItems
+        on:save={updateData}
+      />
     {:else}
       <p>No data</p>
     {/if}

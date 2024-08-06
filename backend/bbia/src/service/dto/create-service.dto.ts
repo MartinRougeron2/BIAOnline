@@ -20,14 +20,14 @@ export class CreateServiceDto {
   location: string;
 
   @ApiProperty()
-  RTO: number;
+  RTO: string;
 
   @ApiProperty()
-  RPO: number;
+  RPO: string;
 
   @ApiProperty()
   vendorId: number;
 
   @ApiProperty()
-  tags: string;
+  tags: string | string[];
 }

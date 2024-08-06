@@ -11,11 +11,11 @@ export interface CreateServiceDto {
 
   location: string;
 
-  RTO: number;
+  RTO: string;
 
-  RPO: number;
+  RPO: string;
 
   vendorId: number;
 
-  tags: string;
+  tags: string | string[];
 }

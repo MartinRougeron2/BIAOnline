@@ -10,8 +10,6 @@
   export let heightCanvas: number = 200;
   export let noname: boolean = false;
 
-  console.log(noname);
-
   let width: number, height: number, gradient: any;
   function getGradient(ctx: any, chartArea: any) {
     const chartWidth = chartArea.right - chartArea.left;
@@ -56,11 +54,11 @@
           }
           return getGradient(ctx, chartArea);
         },
-        tension: 0.31,
+        tension: 0.1,
         pointRadius: 4,
         pointHoverRadius: 10,
         // pointBorderColor: 'rgb(0, 0, 0)',
-        pointBackgroundColor: "rgb(0, 0, 0, 0.5)",
+        pointBackgroundColor: "rgb(0, 0, 0, 0)",
         borderWidth: 2,
       },
     ],
@@ -72,11 +70,15 @@
     maintainAspectRatio: false,
     scales: {
       y: {
-        includeZero: true,
-        intersect: false,
+        suggestedMax: impact.scaleMax,
+        intersect: true,
         beginAtZero: true,
-        max: impact.scaleMax + 1,
-        min: impact.scaleMin,
+        // padding top
+        ticks: {
+          callback: function (value: number) {
+            return value > impact.scaleMax ? "" : value;
+          },
+        },
       },
       x: {
         beginAtZero: true,
