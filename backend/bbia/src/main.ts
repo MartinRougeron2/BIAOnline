@@ -3,7 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { INestApplication } from '@nestjs/common';
 import helmet from 'helmet';
-import { IncomingMessage } from 'http';
+import { IncomingMessage, ServerResponse } from 'http';
 
 async function bootstrap() {
   const app: INestApplication = await NestFactory.create(AppModule);
@@ -13,7 +13,7 @@ async function bootstrap() {
   app.use((req: IncomingMessage, res: any, next: fun) => {
     // logger middleware (cloudfare first)
     const { method, url } = req;
-    const ip = req.headers['x-forwarded-for'] || req.url;
+    const ip = req.headers['cf-connecting-ip'] || req.connection.remoteAddress;
     const date = new Date().toString();
     // response status code
     res.on('finish', () => {
@@ -24,9 +24,19 @@ async function bootstrap() {
   });
 
   // check if the request is from cloudfare, if not, block the request
-  app.use((req: IncomingMessage, res: Response, next: fun) => {
-    const ip = req.headers;
-    console.log(ip);
+  app.use((req: IncomingMessage, res: ServerResponse, next: fun) => {
+    if (process.env.DATABASE_URL.includes('localhost')) {
+      next();
+      return;
+    }
+    const isCloudflare =
+      req.headers['cf-connecting-o2o'] === '1' &&
+      req.headers['host'] === 'https://backendbbia.martinrougeron.me/';
+    if (!isCloudflare) {
+      res.statusCode = 403;
+      res.end('Forbidden');
+      return;
+    }
     next();
   });
 
