@@ -13,12 +13,13 @@ async function bootstrap() {
   app.use((req: IncomingMessage, res: any, next: fun) => {
     // logger middleware (cloudfare first)
     const { method, url } = req;
+    const host = req.headers['host'];
     const ip = req.headers['cf-connecting-ip'] || req.connection.remoteAddress;
     const date = new Date().toString();
     // response status code
     res.on('finish', () => {
       const { statusCode } = res;
-      console.log(`${date} ${ip} ${method} ${url} ${statusCode}`);
+      console.log(`${date} ${ip} ${host} ${method} ${url} ${statusCode}`);
     });
     next();
   });
