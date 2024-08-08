@@ -32,7 +32,7 @@ async function bootstrap() {
     }
     const isCloudflare =
       req.headers['cf-connecting-o2o'] === '1' &&
-      req.headers['host'] === 'https://backendbbia.martinrougeron.me/';
+      req.headers['host'] === 'backendbbia.martinrougeron.me';
     if (!isCloudflare) {
       res.statusCode = 403;
       res.end('Forbidden');
